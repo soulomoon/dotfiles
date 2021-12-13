@@ -12,19 +12,10 @@
       url = "github:lnl7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    flake-utils.url = "github:numtide/flake-utils";
   };
 
 
-  outputs = { self, nixpkgs, home-manager, darwin, flake-utils }: 
-    # flake-utils.lib.eachDefaultSystem (system: {
-    #   legacyPackages = import nixpkgs {
-    #     inherit system;
-    #     config.allowUnfree = true;
-    #   };
-    #   packages.home-manager = home-manager.defaultPackage.${system};
-    # }) //
+  outputs = { self, nixpkgs, home-manager, darwin}: 
     {
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
