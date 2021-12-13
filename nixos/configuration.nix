@@ -30,6 +30,8 @@
   };
   networking.useDHCP = false;
   users.users.ares = {
+    name = "ares";
+    home =  "/home/ares";
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
   };
