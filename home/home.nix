@@ -103,6 +103,7 @@
       ll = "ls -l";
       updateNixos = "sudo nixos-rebuild switch --impure";
       updateHome = "home-manager switch";
+      updateDarwin= "darwin-rebuild switch --impure --flake ~/.config/config";
     };
     oh-my-zsh = {
       enable = true;

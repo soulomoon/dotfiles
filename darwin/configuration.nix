@@ -13,6 +13,11 @@
       # pkgs.macvim
       # home-manager.home-manager
     ];
+  
+  users.users.ares = {
+     name = "ares";
+     home =  "/Users/ares";
+   };
 
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
