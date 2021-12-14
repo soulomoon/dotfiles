@@ -17,7 +17,6 @@
 
   outputs = { self, nixpkgs, home-manager, darwin}: 
   let 
-    home =  "/Users/ares";
     homeConfig = import ./home/home.nix;
   in {
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
@@ -25,7 +24,7 @@
         modules = 
         [ 
           ./nixos/configuration.nix 
-          home-manager.nixosModules.home-manager {
+          home-manager.nixosModules {
             home-manager.users.ares = homeConfig;
           }
         ];
@@ -41,6 +40,15 @@
           }
         ];
       };
+
+      # homeConfigurations.ares = home-manager.lib.homeManagerConfiguration {
+      #   system = "aarch64-darwin";
+      #   xgd.configFile."vim".source = ./vim;
+      #   homeDirectory = "/Users/ares";
+      #   username = "ares";
+      #   configuration = ./home/home.nix;
+      # };
+
       defaultPackage.aarch64-darwin = (darwin.lib.darwinSystem { system = "aarch64-darwin"; modules = []; }).system;
   };
 }
