@@ -1,6 +1,7 @@
-{ config, pkgs, ... }:
+{ config, pkgs, xdg, ... }:
 {
   home.username = "ares";
+  xdg.configFile."vim".source = ./vim;
   programs.vim = {
     # customize vim to use vim-plug
     packageConfigurable = pkgs.vim_configurable // {
@@ -10,10 +11,10 @@
       }));
     };
     
-    extraConfig = 
-      builtins.readFile ../vim/plug-config.vim
-      + builtins.readFile ../vim/key-map.vim
-      + builtins.readFile ../vim/init-setting.vim;
+    # extraConfig = 
+    #   builtins.readFile ../vim/plug-config.vim
+    #   + builtins.readFile ../vim/key-map.vim
+    #   + builtins.readFile ../vim/init-setting.vim;
 
     enable = true;
     plugins = with pkgs.vimPlugins; [
@@ -84,7 +85,7 @@
     nixpkgs-fmt
   ];
   # programs.tmux.enable = true;
-  home.stateVersion = "22.05";
+  # home.stateVersion = "22.05";
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   programs.fzf.enable = true;
@@ -104,7 +105,7 @@
       ll = "ls -l";
       updateNixos = "sudo nixos-rebuild switch --impure";
       updateHome = "home-manager switch";
-      updateDarwin= "darwin-rebuild switch --flake ~/.config/config";
+      updateDarwin= "darwin-rebuild switch --flake ~/.config/nixpkgs";
     };
     oh-my-zsh = {
       enable = true;

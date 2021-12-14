@@ -1,7 +1,4 @@
 { config, pkgs, ... }:
-# let 
-  # home-manager = import <home-manager> {};
-# in
 {
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
@@ -11,7 +8,6 @@
       # pkgs.yarn
       # pkgs.home-manager
       # pkgs.macvim
-      # home-manager.home-manager
     ];
   
   users.users.ares = {

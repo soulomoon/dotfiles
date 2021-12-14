@@ -35,19 +35,15 @@
         modules = 
         [ 
           ./darwin/configuration.nix 
-          home-manager.darwinModule {
-            home-manager.users.ares = homeConfig;
-          }
         ];
       };
 
-      # homeConfigurations.ares = home-manager.lib.homeManagerConfiguration {
-      #   system = "aarch64-darwin";
-      #   xgd.configFile."vim".source = ./vim;
-      #   homeDirectory = "/Users/ares";
-      #   username = "ares";
-      #   configuration = ./home/home.nix;
-      # };
+      homeConfigurations.ares = home-manager.lib.homeManagerConfiguration {
+        system = "aarch64-darwin";
+        homeDirectory = "/Users/ares";
+        username = "ares";
+        configuration = ./home/home.nix;
+      };
 
       defaultPackage.aarch64-darwin = (darwin.lib.darwinSystem { system = "aarch64-darwin"; modules = []; }).system;
   };
