@@ -1,11 +1,8 @@
-let vv = builtins.readFile "./vim/key-map.vim";
-in
 {
   description = "soulomoon's systems";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -19,14 +16,23 @@ in
 
 
   outputs = { self, nixpkgs, home-manager, darwin}: 
-    {
+  let 
+    homeConfig = 
+            { config, pkgs, ... }: 
+            (import ./home/home.nix {config=config; pkgs=pkgs;}
+            // { programs.vim.extraConfig = 
+              builtins.readFile "./vim/plug-config.vim"
+              + builtins.readFile "./vim/key-map.vim"
+              + builtins.readFile "./vim/init-setting.vim";}
+            ) ;
+  in {
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = 
         [ 
           ./nixos/configuration.nix 
           home-manager.nixosModules.home-manager {
-            home-manager.users.ares = import ./home/home.nix;
+            home-manager.users.ares = homeConfig;
           }
         ];
       };
@@ -37,7 +43,7 @@ in
         [ 
           ./darwin/configuration.nix 
           home-manager.darwinModule {
-            home-manager.users.ares = import ./home/home.nix;
+            home-manager.users.ares = homeConfig;
           }
         ];
       };

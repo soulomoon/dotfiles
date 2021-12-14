@@ -9,6 +9,8 @@
 		vimrcConfig.packages.home-manage.start = [ ];
 		}));
 	};
+  
+  # config in flake 
 	# extraConfig = builtins.readFile "${config.home.homeDirectory}/.vim/plug-config.vim"
 	# 	+ builtins.readFile "${config.home.homeDirectory}/.vim/key-map.vim"
 	# 	+ builtins.readFile "${config.home.homeDirectory}/.vim/init-setting.vim";
@@ -101,7 +103,7 @@
       ll = "ls -l";
       updateNixos = "sudo nixos-rebuild switch --impure";
       updateHome = "home-manager switch";
-      updateDarwin= "darwin-rebuild switch --impure --flake ~/.config/config";
+      updateDarwin= "darwin-rebuild switch --flake ~/.config/config";
     };
     oh-my-zsh = {
       enable = true;
