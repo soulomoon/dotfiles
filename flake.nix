@@ -19,7 +19,7 @@
   let 
     homeConfig = 
             { config, pkgs, ... }: 
-            (import ./home/home.nix {config=config; pkgs=pkgs;}
+            (import ./home/home.nix {inherit config; inherit pkgs;}
             // { programs.vim.extraConfig = 
               builtins.readFile "./vim/plug-config.vim"
               + builtins.readFile "./vim/key-map.vim"
