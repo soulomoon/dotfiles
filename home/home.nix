@@ -1,4 +1,4 @@
-{ config, pkgs, vimFile,... }:
+{ config, pkgs, ... }:
 {
   home.username = "ares";
   programs.vim = {
@@ -10,11 +10,11 @@
       }));
     };
     
-    # config in flake 
-    extraConfig = vimFile;
-    # extraConfig = builtins.readFile "${config.home.homeDirectory}/.vim/plug-config.vim"
-    # 	+ builtins.readFile "${config.home.homeDirectory}/.vim/key-map.vim"
-    # 	+ builtins.readFile "${config.home.homeDirectory}/.vim/init-setting.vim";
+    extraConfig = 
+      builtins.readFile ../vim/plug-config.vim
+      + builtins.readFile ../vim/key-map.vim
+      + builtins.readFile ../vim/init-setting.vim;
+
     enable = true;
     plugins = with pkgs.vimPlugins; [
       tmuxline-vim
