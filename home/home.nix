@@ -1,46 +1,47 @@
-{ config, pkgs, ... }:
+{ config, pkgs, vimFile,... }:
 {
   home.username = "ares";
   programs.vim = {
-	# customize vim to use vim-plug
-	packageConfigurable = pkgs.vim_configurable // {
-		customize = (args: pkgs.vim_configurable.customize (pkgs.lib.recursiveUpdate args {
-		vimrcConfig.plug.plugins = args.vimrcConfig.packages.home-manager.start;
-		vimrcConfig.packages.home-manage.start = [ ];
-		}));
-	};
-  
-  # config in flake 
-	# extraConfig = builtins.readFile "${config.home.homeDirectory}/.vim/plug-config.vim"
-	# 	+ builtins.readFile "${config.home.homeDirectory}/.vim/key-map.vim"
-	# 	+ builtins.readFile "${config.home.homeDirectory}/.vim/init-setting.vim";
-	enable = true;
-	plugins = with pkgs.vimPlugins; [
-    tmuxline-vim
-    vim-tmux-navigator
-    vim-tmux
-		onedark-vim
-		vim-commentary
-		vim-which-key
-		unicode-vim
-		vim-easy-align
-		supertab
-    fzfWrapper
-		fzf-vim
-		vim-multiple-cursors
-		vim-abolish
-		auto-pairs
-		vim-sensible
-		ale
-		nerdtree
-		vim-gitgutter
-		nerdtree-git-plugin
-		vim-airline
-		vim-airline-themes
-		vim-devicons
-		haskell-vim
-		vim-nix
-	];
+    # customize vim to use vim-plug
+    packageConfigurable = pkgs.vim_configurable // {
+      customize = (args: pkgs.vim_configurable.customize (pkgs.lib.recursiveUpdate args {
+      vimrcConfig.plug.plugins = args.vimrcConfig.packages.home-manager.start;
+      vimrcConfig.packages.home-manage.start = [ ];
+      }));
+    };
+    
+    # config in flake 
+    extraConfig = vimFile;
+    # extraConfig = builtins.readFile "${config.home.homeDirectory}/.vim/plug-config.vim"
+    # 	+ builtins.readFile "${config.home.homeDirectory}/.vim/key-map.vim"
+    # 	+ builtins.readFile "${config.home.homeDirectory}/.vim/init-setting.vim";
+    enable = true;
+    plugins = with pkgs.vimPlugins; [
+      tmuxline-vim
+      vim-tmux-navigator
+      vim-tmux
+      onedark-vim
+      vim-commentary
+      vim-which-key
+      unicode-vim
+      vim-easy-align
+      supertab
+      fzfWrapper
+      fzf-vim
+      vim-multiple-cursors
+      vim-abolish
+      auto-pairs
+      vim-sensible
+      ale
+      nerdtree
+      vim-gitgutter
+      nerdtree-git-plugin
+      vim-airline
+      vim-airline-themes
+      vim-devicons
+      haskell-vim
+      vim-nix
+    ];
   };
 
 

@@ -17,14 +17,15 @@
 
   outputs = { self, nixpkgs, home-manager, darwin}: 
   let 
+    home =  "/Users/ares";
     homeConfig = 
             { config, pkgs, ... }: 
-            (import ./home/home.nix {inherit config pkgs;}
-            // { programs.vim.extraConfig = 
-              builtins.readFile "./vim/plug-config.vim"
-              + builtins.readFile "./vim/key-map.vim"
-              + builtins.readFile "./vim/init-setting.vim";}
-            ) ;
+            let 
+              vimFile = builtins.readFile ./vim/plug-config.vim
+                + builtins.readFile ./vim/key-map.vim
+                + builtins.readFile ./vim/init-setting.vim;
+            in
+            (import ./home/home.nix {inherit config pkgs vimFile; });
   in {
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
