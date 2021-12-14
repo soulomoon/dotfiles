@@ -1,8 +1,11 @@
+let vv = builtins.readFile "./vim/key-map.vim";
+in
 {
   description = "soulomoon's systems";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";

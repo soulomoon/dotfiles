@@ -9,9 +9,9 @@
 		vimrcConfig.packages.home-manage.start = [ ];
 		}));
 	};
-	extraConfig = builtins.readFile "${config.home.homeDirectory}/.vim/plug-config.vim"
-		+ builtins.readFile "${config.home.homeDirectory}/.vim/key-map.vim"
-		+ builtins.readFile "${config.home.homeDirectory}/.vim/init-setting.vim";
+	# extraConfig = builtins.readFile "${config.home.homeDirectory}/.vim/plug-config.vim"
+	# 	+ builtins.readFile "${config.home.homeDirectory}/.vim/key-map.vim"
+	# 	+ builtins.readFile "${config.home.homeDirectory}/.vim/init-setting.vim";
 	enable = true;
 	plugins = with pkgs.vimPlugins; [
     tmuxline-vim
@@ -59,6 +59,7 @@
     # stack
     # cabal-install
     # haskellPackages.implicit-hie
+    # haskell-language-server
 
     nodejs
     swiProlog
@@ -66,9 +67,6 @@
 
     # database
     sqlite
-
-
-    # haskell-language-server
 
     # tools
     diffutils
