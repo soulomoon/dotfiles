@@ -12,39 +12,63 @@
       url = "github:lnl7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # flake-utils.url = "github:numtide/flake-utils";
   };
 
 
-  outputs = { self, nixpkgs, home-manager, darwin}: 
-  let 
-    homeConfig = import ./home/home.nix;
-  in {
-      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = 
-        [ 
-          ./nixos/configuration.nix 
-          home-manager.nixosModules {
-            home-manager.users.ares = homeConfig;
-          }
-        ];
-      };
+  outputs = { self, nixpkgs, home-manager, darwin }: 
+    # flake-utils.lib.eachDefaultSystem (system:
+    # {
+    #   legacyPackages = import nixpkgs {
+    #     inherit system;
+    #     config.allowUnfree = true;
+    #   };
 
-      darwinConfigurations.aress-MacBook-Pro = darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        modules = 
-        [ 
-          ./darwin/configuration.nix 
-        ];
-      };
+    #   legacyPackages.aarch64-darwin.homeConfigurations."ares@aress-MacBook-Pro.local".activationPackage #   = home-manager.lib.homeManagerConfiguration {
+    #       system = "aarch64-darwin";
+    #       homeDirectory = "Users.ares";
+    #       username = "ares";
+    #       configuration = ./home/home.nix;
+    #     };
+    #   packages.home-manager = home-manager.defaultPackage.${system};
+    # })
+    # //  
+    {
+        nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = 
+          [ 
+            ./nixos/configuration.nix 
+          ];
+        };
 
-      homeConfigurations.ares = home-manager.lib.homeManagerConfiguration {
-        system = "aarch64-darwin";
-        homeDirectory = "/Users/ares";
-        username = "ares";
-        configuration = ./home/home.nix;
-      };
+        darwinConfigurations.aress-MacBook-Pro = darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          modules = 
+          [ 
+            ./darwin/configuration.nix 
+            { nixpkgs.pkgs = self.legacyPackages."aarch64-darwin"; }
+          ];
+        };
 
-      defaultPackage.aarch64-darwin = (darwin.lib.darwinSystem { system = "aarch64-darwin"; modules = []; }).system;
-  };
+        homeConfigurations = {
+          mac = home-manager.lib.homeManagerConfiguration {
+              system = "aarch64-darwin";
+              homeDirectory = /Users/ares;
+              username = "ares";
+              configuration = ./home/home.nix;
+            };
+          nixos = home-manager.lib.homeManagerConfiguration {
+              system = "x86_64-linux";
+              homeDirectory = /home/ares;
+              username = "ares";
+              configuration = ./home/home.nix;
+            };
+        };
+
+        defaultpackage.aarch64-darwin = self.homeconfigurations.mac.activationpackage;
+        defaultpackage.x86_64-linux = self.homeconfigurations.nixos.activationpackage;
+      }
+    ;
 }

@@ -14,7 +14,7 @@
   imports =
     [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    (fetchTarball "https://github.com/msteen/nixos-vscode-server/tarball/master")
+    ./nixos-vscode-ssh-fix.nix    
     ];
   services.vscode-server.enable = true;
 
