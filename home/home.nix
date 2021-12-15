@@ -110,7 +110,7 @@
     '';
     shellAliases = {
       ll = "ls -l";
-      # updateHome = "home-manager switch";
+      updateHome = "nix run ~/.config/nixpkgs";
       # updateNixos = "sudo nixos-rebuild switch";
       updateNixos= "sudo nixos-rebuild switch --flake ~/.config/nixpkgs";
       updateDarwin= "darwin-rebuild switch --flake ~/.config/nixpkgs";
