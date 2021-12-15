@@ -14,7 +14,7 @@
   imports =
     [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ./nixos-vscode-ssh-fix.nix    
+    ./nixos-vscode-ssh-fix
     ];
   services.vscode-server.enable = true;
 
