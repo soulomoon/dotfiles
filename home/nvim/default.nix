@@ -5,41 +5,28 @@ let vimPlugins =
       onedark-vim 
       vim-which-key
       vim-nix trouble-nvim nvim-web-devicons 
-    #   lsp-colors-nvim
-      plenary-nvim telescope-nvim
-
+      lsp-colors-nvim
+      toggleterm-nvim
     ];
 in
 {
   programs.neovim = {
     enable = true;
     plugins = vimPlugins ++ (with pkgs.vimPlugins; [
+        which-key-nvim
         nvim-treesitter
-
-        nvim-lspconfig
-        nvim-cmp
-        cmp-nvim-lsp
-        cmp_luasnip
-        luasnip
-
+        plenary-nvim telescope-nvim
+        nvim-lspconfig nvim-cmp cmp-nvim-lsp cmp_luasnip luasnip
         nvim-peekup
         # nvcode-color-schemes-vim
         nvim-spectre
-
         # vim-tree-lua
-
         chadtree
-
-        indent-blankline-nvim
-
-        bufferline-nvim
-
-        # feline-nvim
-
-        lualine-nvim
-
         symbols-outline-nvim
-
+        indent-blankline-nvim
+        bufferline-nvim
+        # feline-nvim
+        lualine-nvim 
         cheatsheet-nvim
     ]); 
     extraConfig = builtins.readFile ./config.vim +
