@@ -23,6 +23,9 @@
     # tools
     diffutils shellcheck pandoc fasd ripgrep youtube-dl thefuck gtop nixpkgs-fmt
     coreutils
+    telnet
+    qemu
+    # btop
   ];
   # programs.tmux.enable = true;
   # home.stateVersion = "22.05";
