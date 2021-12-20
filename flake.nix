@@ -27,12 +27,11 @@
           ];
         };
 
-        darwinConfigurations.aress-MacBook-Pro = darwin.lib.darwinSystem {
+        darwinConfigurations.aress-MBP = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           modules = 
           [ 
             ./darwin/configuration.nix 
-            { nixpkgs.pkgs = self.legacyPackages."aarch64-darwin"; }
           ];
         };
 

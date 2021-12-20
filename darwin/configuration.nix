@@ -10,6 +10,9 @@
       # pkgs.macvim
     ];
   
+  # environment.profiles =
+  # [ "$HOME/.nix-profile" ]
+  
   users.users.ares = {
      name = "ares";
      home =  "/Users/ares";
@@ -23,11 +26,11 @@
   services.nix-daemon.enable = true;
   # nix.package = pkgs.nix;
   # Create /etc/bashrc that loads the nix-darwin environment.
-  programs.zsh.enable = true;  # default shell on catalina
+  # programs.zsh.enable = true;  # default shell on catalina
   # programs.fish.enable = true;
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 4;
-  nix.binaryCaches = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" "https://cache.nixos.org/" ];
+  nix.binaryCaches = [ "https://cache.nixos.org/" "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
 }
