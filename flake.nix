@@ -27,7 +27,7 @@
           ];
         };
 
-        darwinConfigurations.aress-MBP = darwin.lib.darwinSystem {
+        darwinConfigurations.aress-MacBook-Pro = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           modules = 
           [ 
