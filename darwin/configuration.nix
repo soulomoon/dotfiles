@@ -12,7 +12,6 @@
   
   # environment.profiles =
   # [ "$HOME/.nix-profile" ]
-  
   users.users.ares = {
      name = "ares";
      home =  "/Users/ares";
@@ -33,4 +32,14 @@
   # $ darwin-rebuild changelog
   system.stateVersion = 4;
   nix.binaryCaches = [ "https://cache.nixos.org/" "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
+
+
+  # fileSystems."Users/ares/mnt/share" = {
+  #     device = "smb://192.168.31.1";
+  #     fsType = "cifs";
+  #     options = let
+  #       # this line prevents hanging on network split
+  #       automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+  #     in ["${automount_opts}"];
+  # };
 }
