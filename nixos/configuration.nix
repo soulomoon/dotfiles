@@ -70,11 +70,10 @@
 
   networking.interfaces.enp0s20f0u1u1.wakeOnLan.enable= true;
 
-
-
-
   system.stateVersion = "21.05"; # Did you read the comment?
   nixpkgs.config.allowUnfree = true; 
   users.defaultUserShell = pkgs.zsh;
+
+  services.gnome.gnome-keyring.enable = true;
 }
 
