@@ -4,6 +4,7 @@
     ./vim 
     ./nvim 
     ./zsh
+    ./tmux
     ];
   home.username = "ares";
   home.packages = with pkgs; [
@@ -16,10 +17,8 @@
     # haskellPackages.implicit-hie
     # haskell-language-server
     nodejs swiProlog jdk
-
     # database
     sqlite
-
     # tools
     diffutils shellcheck pandoc fasd ripgrep youtube-dl thefuck gtop nixpkgs-fmt
     coreutils
@@ -46,4 +45,5 @@
     extraConfig = builtins.readFile ./dir_colors;
   };
   programs.fzf.enable = true;
+
 }
