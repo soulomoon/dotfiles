@@ -26,7 +26,7 @@
     telnet
     qemu
     # btop
-    libsecret
+    # libsecret
   ];
   # programs.tmux.enable = true;
   # home.stateVersion = "22.05";
