@@ -20,7 +20,7 @@
     };
 
   fileSystems."/boot" =
-    { device = "/dev/sda1";
+    { device = "/dev/disk/by-label/nixboot";
       fsType = "vfat";
     };
 
