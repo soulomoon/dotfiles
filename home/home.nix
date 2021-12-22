@@ -35,7 +35,13 @@
     enable = true;
     userName = "soulomoon";
     userEmail = "fwy996602672@gmail.com";
+    extraConfig = {
+      credential.helper = "${
+          pkgs.git.override { withLibsecret = true; }
+        }/bin/git-credential-libsecret";
+    };
   };
+
   programs.dircolors = {
     enable = true;
     extraConfig = builtins.readFile ./dir_colors;
