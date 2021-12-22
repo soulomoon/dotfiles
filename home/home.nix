@@ -26,14 +26,19 @@
     telnet
     qemu
     # btop
+    libsecret
   ];
   # programs.tmux.enable = true;
+  # home.stateVersion = "22.05";
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   programs.git = {
     enable = true;
     userName = "soulomoon";
     userEmail = "fwy996602672@gmail.com";
+    extraConfig = {
+      credential.helper = "store --file ~/.git-credentials";
+    };
   };
 
   programs.dircolors = {
