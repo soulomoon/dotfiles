@@ -73,7 +73,5 @@
   system.stateVersion = "21.05"; # Did you read the comment?
   nixpkgs.config.allowUnfree = true; 
   users.defaultUserShell = pkgs.zsh;
-
-  services.gnome.gnome-keyring.enable = true;
 }
 
