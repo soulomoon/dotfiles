@@ -36,11 +36,27 @@
         };
 
         homeConfigurations = {
-          mac = home-manager.lib.homeManagerConfiguration {
+          
+
+          mac = with import nixpkgs { system = "aarch64-darwin"; }; 
+          let tmuxPlugins = import ./tmux-plugins {inherit lib pkgs fetchFromGitHub stdenv;};
+          in
+          home-manager.lib.homeManagerConfiguration {
               system = "aarch64-darwin";
               homeDirectory = /Users/ares;
               username = "ares";
-              configuration = ./home/home.nix;
+              configuration = { config, pkgs, ... }:
+                {
+                  nixpkgs.overlays = [ 
+                    # (final: prev: { tmuxPlugins = import ./tmux-plugins {inherit lib pkgs fetchFromGitHub stdenv;}; } ) 
+                    ];
+                  nixpkgs.config = {
+                    allowUnfree = true;
+                  };
+                  imports = [
+                    ./home/home.nix
+                  ];
+                };
             };
           nixos = home-manager.lib.homeManagerConfiguration {
               system = "x86_64-linux";
