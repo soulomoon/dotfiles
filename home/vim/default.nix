@@ -15,7 +15,7 @@
     plugins = with pkgs.vimPlugins; [
       nord-vim
 
-      tmuxline-vim
+      # tmuxline-vim
       vim-tmux-navigator
       vim-tmux
       onedark-vim
