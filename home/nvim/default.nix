@@ -3,7 +3,6 @@ let vimPlugins =
     with pkgs.vimPlugins; [
       nord-vim
       onedark-vim 
-      vim-which-key
       vim-nix trouble-nvim nvim-web-devicons 
       lsp-colors-nvim
       toggleterm-nvim
@@ -28,6 +27,7 @@ in
         # feline-nvim
         lualine-nvim 
         cheatsheet-nvim
+        neorg
     ]); 
     extraConfig = builtins.readFile ./config.vim +
         "lua << EOF\n" +

@@ -16,6 +16,7 @@
       updateDarwin= "darwin-rebuild switch --flake ~/.config/nixpkgs";
       updateHomeMac = "home-manager switch --flake ~/.config/nixpkgs/#mac -v";
       updateHomeNixos = "home-manager switch --flake ~/.config/nixpkgs/#nixos -v";
+      t = "tmux attach -t default || tmux new -s default";
     };
     oh-my-zsh = {
       enable = true;
