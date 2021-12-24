@@ -4,6 +4,7 @@
 
 { config, pkgs, ... }:
 {
+  virtualisation.docker.enable = true;
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = ''
@@ -33,7 +34,7 @@
     name = "ares";
     home =  "/home/ares";
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "docker" ]; # Enable ‘sudo’ for the user.
   };
 
   environment.systemPackages = with pkgs; [
