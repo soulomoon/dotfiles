@@ -7,7 +7,7 @@
       # pkgs.vim
       # pkgs.yarn
       # pkgs.home-manager
-      # pkgs.macvim
+      pkgs.docker
     ];
   
   # environment.profiles =
