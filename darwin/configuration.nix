@@ -12,9 +12,15 @@
   
   # environment.profiles =
   # [ "$HOME/.nix-profile" ]
+  virtualisation.docker.enable = true;
+
   users.users.ares = {
      name = "ares";
      home =  "/Users/ares";
+     isNormalUser = true;
+     extraGroups = [
+      "docker"
+     ];
    };
 
   # Use a custom configuration.nix location.

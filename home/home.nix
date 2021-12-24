@@ -24,6 +24,7 @@
     coreutils
     telnet
     qemu
+    docker
     # btop
     # libsecret
   ];
