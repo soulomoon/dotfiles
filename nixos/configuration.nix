@@ -85,5 +85,7 @@
   system.stateVersion = "21.05"; # Did you read the comment?
   nixpkgs.config.allowUnfree = true; 
   users.defaultUserShell = pkgs.zsh;
+
+  nix.trustedUsers = [ "root" "ares" ];
 }
 

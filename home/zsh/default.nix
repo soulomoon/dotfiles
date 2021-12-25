@@ -21,6 +21,9 @@
     oh-my-zsh = {
       enable = true;
       plugins = [ "brew" "fasd"];
+      extraConfig = ''
+        export PATH=~/.emacs.d/bin:$PATH
+      '';
     };
     zplug = {
       enable = true;
@@ -32,5 +35,6 @@
         { name = "romkatv/powerlevel10k"; tags = [ as:theme depth:1 ]; }
       ];
     };
+
   };
 }

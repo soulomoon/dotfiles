@@ -13,7 +13,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # flake-utils.url = "github:numtide/flake-utils";
   };
 
 
@@ -53,9 +52,7 @@
                   nixpkgs.config = {
                     allowUnfree = true;
                   };
-                  imports = [
-                    ./home/home.nix
-                  ];
+                  imports = [ ./home/home.nix ];
                 };
             };
           nixos = home-manager.lib.homeManagerConfiguration {
