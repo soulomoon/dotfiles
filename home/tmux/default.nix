@@ -1,6 +1,6 @@
 { config, pkgs, xdg, fetchFromGitHub, lib, ... }:
-let 
-m-prefix-highlight = pkgs.tmuxPlugins.mkTmuxPlugin {
+let
+  m-prefix-highlight = pkgs.tmuxPlugins.mkTmuxPlugin {
     pluginName = "prefix-highlight";
     version = "unstable-2021-09-26";
     src = pkgs.fetchFromGitHub {
@@ -11,7 +11,7 @@ m-prefix-highlight = pkgs.tmuxPlugins.mkTmuxPlugin {
     };
   };
 
-m-power-theme = pkgs.tmuxPlugins.mkTmuxPlugin {
+  m-power-theme = pkgs.tmuxPlugins.mkTmuxPlugin {
     pluginName = "power";
     rtpFilePath = "tmux-power.tmux";
     version = "unstable-2021-09-12";
@@ -32,7 +32,7 @@ in
 
     plugins = with pkgs.tmuxPlugins; [
       # net-speed
-      { 
+      {
         plugin = m-power-theme;
         extraConfig = ''
           set -g @tmux_power_theme 'moon'
@@ -40,7 +40,7 @@ in
         '';
       }
       # need to place after power-theme to work
-      { 
+      {
         plugin = m-prefix-highlight;
         extraConfig = ''
           set -g @prefix_highlight_empty_has_affixes 'on' # default is 'off'
@@ -51,18 +51,18 @@ in
       }
 
       # {
-			# plugin = dracula;
-			# extraConfig = ''
+      # plugin = dracula;
+      # extraConfig = ''
       #   set -g @dracula-show-fahrenheit false
       #   # set -g @dracula-plugins "battery git cpu-usage ram-usage network-bandwidth weather time"
-			# 	set -g @dracula-show-powerline true
-			# 	set -g @dracula-refresh-rate 10
-			# '';
+      #   set -g @dracula-show-powerline true
+      #   set -g @dracula-refresh-rate 10
+      # '';
       # }
       sensible
       yank
       pain-control
-      { 
+      {
         plugin = resurrect;
         extraConfig = ''
           set -g @resurrect-strategy-vim 'session'
@@ -77,10 +77,10 @@ in
           set -g @continuum-boot 'on'
           set -g @continuum-boot-options 'iterm'
         '';
+          }
+          vim-tmux-navigator
+          ];
+          extraConfig =
+          builtins.readFile ./.tmux.conf;
+      };
       }
-      vim-tmux-navigator
-    ];
-    extraConfig = 
-        builtins.readFile ./.tmux.conf;
-  };
-}
