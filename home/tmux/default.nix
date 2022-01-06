@@ -77,10 +77,10 @@ in
           set -g @continuum-boot 'on'
           set -g @continuum-boot-options 'iterm'
         '';
-          }
-          vim-tmux-navigator
-          ];
-          extraConfig =
-          builtins.readFile ./.tmux.conf;
-      };
       }
+      vim-tmux-navigator
+    ];
+    extraConfig =
+      builtins.readFile ./.tmux.conf;
+  };
+}
