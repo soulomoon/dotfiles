@@ -8,14 +8,15 @@
     ];
   home.username = "ares";
   home.packages = with pkgs; [
+    bash
     # pkgs is the set of all packages in the default home.nix implementation
-    llvm cmake flex bison gcc
-    # ghc
+    llvm cmake flex bison 
+    # gcc
     # ghc
     # stack
     # cabal-install
     # haskellPackages.implicit-hie
-    # haskell-language-server
+    # haskellPackages.haskell-language-server
     nodejs swiProlog jdk
     # database
     sqlite
