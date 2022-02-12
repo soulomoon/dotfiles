@@ -11,15 +11,18 @@
     bash
     # pkgs is the set of all packages in the default home.nix implementation
     llvm cmake flex bison 
+    direnv
     # gcc
     # ghc
     # stack
     # cabal-install
     # haskellPackages.implicit-hie
     # haskellPackages.haskell-language-server
-    nodejs swiProlog jdk
+    nodejs swiProlog jdk clojure
     # database
     sqlite
+    cachix
+    act
     # tools
     diffutils shellcheck pandoc fasd ripgrep youtube-dl thefuck gtop nixpkgs-fmt
     coreutils
