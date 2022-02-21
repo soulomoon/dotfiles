@@ -5,6 +5,7 @@
     ./nvim 
     ./zsh
     ./tmux
+    ./fish
     ];
   home.username = "ares";
   home.packages = with pkgs; [
