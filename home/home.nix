@@ -46,6 +46,8 @@
     };
   };
 
+  # programs.go.enable = true;
+
   programs.dircolors = {
     enable = true;
     extraConfig = builtins.readFile ./dir_colors;
