@@ -40,20 +40,20 @@
 
   environment.systemPackages = with pkgs; [
     # myVim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-    # python
-    gcc
-    # python3
-    # nodejs
-    gtop
-    # tldr
-    git
+    #wget
+    ## python
+    #gcc
+    ## python3
+    ## nodejs
+    #gtop
+    ## tldr
+    #git
 
-    stack
-    haskell-language-server
-    ghc
-    cabal-install
-    haskellPackages.implicit-hie
+    #stack
+    #haskell-language-server
+    #ghc
+    #cabal-install
+    #haskellPackages.implicit-hie
   ];
   # Enable the OpenSSH daemon.
   services.openssh = {
