@@ -77,7 +77,7 @@
   nixpkgs.config.allowUnfree = true; 
   users.defaultUserShell = pkgs.zsh;
 
-  nix.trustedUsers = [ "root" "ares" ];
+  nix.settings.trusted-users = [ "root" "ares" ];
   networking.firewall.allowedTCPPorts = [ 25500 ];
 
   virtualisation.docker.enable = true;
