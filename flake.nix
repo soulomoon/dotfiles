@@ -18,11 +18,18 @@
 
   outputs = { self, nixpkgs, home-manager, darwin }: 
     {
+        nixosConfigurations.nixosDesk = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = 
+          [ 
+            ./nixosDesk/configuration.nix 
+          ];
+        };
         nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = 
           [ 
-            ./nixos/configuration.nix 
+            ./nixosDesk/configuration.nix 
           ];
         };
 
