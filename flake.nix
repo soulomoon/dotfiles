@@ -29,7 +29,7 @@
           system = "x86_64-linux";
           modules = 
           [ 
-            ./nixosDesk/configuration.nix 
+            ./nixos/configuration.nix 
           ];
         };
 
