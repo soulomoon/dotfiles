@@ -6,6 +6,8 @@
       export TERM="xterm-256color"
       source ~/.p10k.zsh 
       CASE_SENSITIVE="false"
+      [[ ! -r /Users/ares/.opam/opam-init/init.zsh ]] || source /Users/ares/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
+
     '';
     shellAliases = {
       ll = "ls -l";
@@ -23,6 +25,7 @@
       plugins = [ "brew" "fasd"];
       extraConfig = ''
         export PATH=~/.emacs.d/bin:$PATH
+        export PATH=~/bin:$PATH
       '';
     };
     zplug = {

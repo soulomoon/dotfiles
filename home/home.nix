@@ -30,6 +30,8 @@
     telnet
     qemu
     docker
+    # irssi
+    
     # btop
     # libsecret
   ];
