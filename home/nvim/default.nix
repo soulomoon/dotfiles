@@ -20,7 +20,7 @@ in
         # nvcode-color-schemes-vim
         nvim-spectre
         # vim-tree-lua
-        chadtree
+        # chadtree
         symbols-outline-nvim
         indent-blankline-nvim
         bufferline-nvim

@@ -47,6 +47,7 @@ augroup file_setting
     autocmd Filetype javascript.jsx.html.rkt setlocal ts=2 sts=2 sw=2 expandtab
     autocmd FileType rkt setl commentstring=;\ %s
     autocmd FileType cl setl commentstring=;\ %s
+    autocmd BufRead,BufNewFile *.rkt setlocal filetype=racket
 augroup END
 
 " enable true color
@@ -66,6 +67,6 @@ set foldmethod=syntax
 
 
 set signcolumn=yes
-set guifont=JetBrainsMonoMedium\ Nerd\ Font:h12
+set guifont=JetBrainsMono\ Nerd\ Font:h12
 " remove scrollbars
 set guioptions=

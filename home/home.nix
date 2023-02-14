@@ -10,6 +10,7 @@
   home.username = "ares";
   home.packages = with pkgs; [
     bash
+    # macvim
     # pkgs is the set of all packages in the default home.nix implementation
     llvm cmake flex bison 
     direnv
@@ -19,15 +20,19 @@
     # cabal-install
     # haskellPackages.implicit-hie
     # haskellPackages.haskell-language-server
-    nodejs swiProlog jdk clojure
+    # haskellPackages.Agda
+    nodejs 
+    swiProlog 
+    jdk 
+    clojure
     # database
     sqlite
     cachix
     act
     # tools
-    diffutils shellcheck pandoc fasd ripgrep youtube-dl thefuck gtop nixpkgs-fmt
+    diffutils shellcheck pandoc fasd ripgrep thefuck gtop nixpkgs-fmt
     coreutils
-    telnet
+    inetutils
     qemu
     docker
     # irssi
