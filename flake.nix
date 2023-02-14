@@ -2,7 +2,7 @@
   description = "soulomoon's systems";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/cfa78cb43389635df0a9086cb31b74d3c3693935";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -45,27 +45,30 @@
           
 
           mac = with import nixpkgs { system = "aarch64-darwin"; }; 
-          let tmuxPlugins = import ./tmux-plugins {inherit lib pkgs fetchFromGitHub stdenv;};
-          in
-          home-manager.lib.homeManagerConfiguration {
-              system = "aarch64-darwin";
-              homeDirectory = /Users/ares;
-              username = "ares";
-              configuration = { config, pkgs, ... }:
-                {
-                  nixpkgs.overlays = [ 
-                    # (final: prev: { tmuxPlugins = import ./tmux-plugins {inherit lib pkgs fetchFromGitHub stdenv;}; } ) 
-                    ];
-                  nixpkgs.config = {
-                    allowUnfree = true;
+            home-manager.lib.homeManagerConfiguration {
+                system = "aarch64-darwin";
+                homeDirectory = /Users/ares;
+                username = "ares";
+                pkgs = pkgs;
+                configuration = { config, pkgs, ... }:
+                  {
+                    nixpkgs.overlays = [ ];
+                    nixpkgs.config = {
+                      allowUnfree = true;
+                    };
+                    imports = [ ./home/home.nix ];
                   };
-                  imports = [ ./home/home.nix ];
-                };
-            };
+              };
           nixos = home-manager.lib.homeManagerConfiguration {
               system = "x86_64-linux";
               homeDirectory = /home/ares;
               username = "ares";
+              configuration = ./home/home.nix;
+            };
+          multipass = home-manager.lib.homeManagerConfiguration {
+              system = "aarch64-linux";
+              homeDirectory = /home/ubuntu;
+              username = "ubuntu";
               configuration = ./home/home.nix;
             };
         };
