@@ -1,12 +1,23 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, ... }: 
+let 
+  vimrcConf = args: pkgs.lib.recursiveUpdate args {
+    vimrcConfig.plug.plugins = args.vimrcConfig.packages.home-manager.start;
+    vimrcConfig.packages.home-manage.start = [ ];
+    };
+  macvim = (pkgs.macvim // {
+    customize = (args: pkgs.macvim.configure (vimrcConf args).vimrcConfig);
+  });
+  vim = pkgs.vim_configurable // {
+      customize = (args: pkgs.vim_configurable.customize (vimrcConf args));};
+in 
+{
   programs.vim = {
     # customize vim to use vim-plug
-    packageConfigurable = pkgs.vim_configurable // {
-      customize = (args: pkgs.vim_configurable.customize (pkgs.lib.recursiveUpdate args {
-      vimrcConfig.plug.plugins = args.vimrcConfig.packages.home-manager.start;
-      vimrcConfig.packages.home-manage.start = [ ];
-      }));
-    };
+    packageConfigurable = 
+    if config.nixpkgs.system == "aarch64-darwin" then macvim else vim ;
+
+    
+
     extraConfig = 
       builtins.readFile ./init-setting.vim +
       builtins.readFile ./key-map.vim +
@@ -14,8 +25,8 @@
     ;
     plugins = with pkgs.vimPlugins; [
       nord-vim
-
-      # tmuxline-vim
+      vim-racket
+      tmuxline-vim
       vim-tmux-navigator
       vim-tmux
       onedark-vim
