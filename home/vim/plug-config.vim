@@ -8,7 +8,7 @@
 " # supertab to cycle forward
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
-let g:ale_haskell_hie_executable = "haskell-language-server-wrapper"
+"  let g:ale_haskell_hie_executable = "haskell-language-server-wrapper"
 let g:ale_lint_on_text_changed = 1
 " let g:ale_lint_on_save = 0
 
@@ -19,11 +19,14 @@ let g:ale_completion_max_suggestions = 50
 let g:ale_completion_enabled = 1
 let g:ale_linters_explicit = 1
 let g:ale_linters = { 
-            \'haskell': ['hie'], 
+            \'haskell': ['hls'], 
+            \'rust': ['analyzer'], 
+            \'racket': ['racket_langserver'],
             \}
 let g:ale_fixers = { 
             \'javascript': ['eslint'], 
-            \'haskell': ['brittany']
+            \'rust': ['analyzer'], 
+            \'haskell': ['brittany'],
             \}
 let g:ale_haskell_brittany_options = "--write-mode inplace"
 " " disable style lint
