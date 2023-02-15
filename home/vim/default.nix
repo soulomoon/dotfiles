@@ -9,15 +9,21 @@ let
   });
   vim = pkgs.vim_configurable // {
       customize = (args: pkgs.vim_configurable.customize (vimrcConf args));};
+  qline-vim = pkgs.vimUtils.buildVimPlugin {
+    name = "qline.vim";
+    src = pkgs.fetchFromGitHub {
+      owner = "Bakudankun";
+      repo = "qline.vim";
+      rev = "master";
+      sha256 = "0p5dv5axz4xwjcpmf5m2svv2fz8n1kxfvkj2c7yvdg984zndpbym";
+    };
+  };
 in 
 {
   programs.vim = {
     # customize vim to use vim-plug
     packageConfigurable = 
-    if config.nixpkgs.system == "aarch64-darwin" then macvim else vim ;
-
-    
-
+    if config.nixpkgs.system == "aarch64-darwin" then vim else vim ;
     extraConfig = 
       builtins.readFile ./init-setting.vim +
       builtins.readFile ./key-map.vim +
@@ -47,6 +53,8 @@ in
       nerdtree-git-plugin
       vim-airline
       vim-airline-themes
+      # lightline-vim
+      # qline-vim
       vim-devicons
       haskell-vim
       vim-nix
