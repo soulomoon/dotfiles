@@ -117,7 +117,6 @@ require('bufferline').setup {}
 require'lualine'.setup {
     extensions = {
         'quickfix',
-        'chadtree',
         'symbols-outline',
     }
 }

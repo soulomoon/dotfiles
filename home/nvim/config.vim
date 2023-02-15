@@ -5,9 +5,6 @@ inoremap jk <esc>
 " inoremap <esc> <nop>
 
 let g:windowswap_map_keys = 0 "prevent default bindings
-let g:chadtree_settings = {
-    \'xdg': v:true,
-    \}
 autocmd VimEnter * CHADopen
 set timeoutlen=500
 let g:mapleader = "\<Space>"
