@@ -1,14 +1,15 @@
-{ config, pkgs, lib, ... }: 
-let 
+{ config, pkgs, lib, ... }:
+let
   vimrcConf = args: pkgs.lib.recursiveUpdate args {
     vimrcConfig.plug.plugins = args.vimrcConfig.packages.home-manager.start;
     vimrcConfig.packages.home-manage.start = [ ];
-    };
+  };
   macvim = (pkgs.macvim // {
     customize = (args: pkgs.macvim.configure (vimrcConf args).vimrcConfig);
   });
   vim = pkgs.vim_configurable // {
-      customize = (args: pkgs.vim_configurable.customize (vimrcConf args));};
+    customize = (args: pkgs.vim_configurable.customize (vimrcConf args));
+  };
   qline-vim = pkgs.vimUtils.buildVimPlugin {
     name = "qline.vim";
     src = pkgs.fetchFromGitHub {
@@ -18,13 +19,12 @@ let
       sha256 = "0p5dv5axz4xwjcpmf5m2svv2fz8n1kxfvkj2c7yvdg984zndpbym";
     };
   };
-in 
+in
 {
   programs.vim = {
     # customize vim to use vim-plug
-    packageConfigurable = 
-    if config.nixpkgs.system == "aarch64-darwin" then vim else vim ;
-    extraConfig = 
+    packageConfigurable = if config.nixpkgs.system == "aarch64-darwin" then vim else vim;
+    extraConfig =
       builtins.readFile ./init-setting.vim +
       builtins.readFile ./key-map.vim +
       builtins.readFile ./plug-config.vim

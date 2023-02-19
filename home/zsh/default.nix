@@ -16,6 +16,7 @@ in {
     shellAliases = {
       mc = "code ${ConfigFile}";
       ll = "ls -l";
+      # replace home
       updatehome = "nix run ${ConfigFile}";
       uh = "nix run ${ConfigFile}";
       # updateNixos = "sudo nixos-rebuild switch";

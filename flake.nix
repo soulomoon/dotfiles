@@ -42,8 +42,6 @@
         };
 
         homeConfigurations = {
-          
-
           mac = with import nixpkgs { system = "aarch64-darwin"; }; 
             home-manager.lib.homeManagerConfiguration {
                 system = "aarch64-darwin";

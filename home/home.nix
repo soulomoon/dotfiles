@@ -28,7 +28,7 @@
     # database
     sqlite
     cachix
-    act
+    # act
     # tools
     diffutils shellcheck pandoc fasd ripgrep thefuck gtop nixpkgs-fmt
     coreutils
