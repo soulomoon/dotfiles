@@ -12,6 +12,7 @@ in {
       CASE_SENSITIVE="false"
       eval $(thefuck --alias)
       [[ ! -r ~/.opam/opam-init/init.zsh ]] || source ~/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
+
     '';
     shellAliases = {
       mc = "code ${ConfigFile}";
@@ -33,6 +34,11 @@ in {
         export PATH=~/.emacs.d/bin:$PATH
         export PATH=~/bin:$PATH
         export PATH=~/.cargo/bin:$PATH
+        export PATH=/opt/homebrew/Cellar/pcre/8.45/include/:$PATH
+        export NVM_DIR="$HOME/.nvm"
+        export PATH="/opt/homebrew/opt/sphinx-doc/bin:$PATH"
+        [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+        [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
       '';
     };
     zplug = {

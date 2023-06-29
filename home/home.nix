@@ -21,13 +21,14 @@
     # haskellPackages.implicit-hie
     # haskellPackages.haskell-language-server
     # haskellPackages.Agda
-    nodejs 
+    # nodejs 
     swiProlog 
-    jdk 
+    # jdk 
     clojure
     # database
     sqlite
     cachix
+    # helix
     # act
     # tools
     diffutils shellcheck pandoc fasd ripgrep thefuck gtop nixpkgs-fmt
@@ -35,6 +36,7 @@
     inetutils
     qemu
     docker
+    redis
     # irssi
     
     # btop

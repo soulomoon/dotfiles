@@ -33,7 +33,7 @@
           ];
         };
 
-        darwinConfigurations.aress-MacBook-Pro = darwin.lib.darwinSystem {
+        darwinConfigurations.aress-mbp = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           modules = 
           [ 
@@ -57,18 +57,21 @@
                     imports = [ ./home/home.nix ];
                   };
               };
-          nixos = home-manager.lib.homeManagerConfiguration {
+          nixos = with import nixpkgs { system = "x86_64-linux"; };
+          home-manager.lib.homeManagerConfiguration {
               system = "x86_64-linux";
               homeDirectory = /home/ares;
               username = "ares";
               configuration = ./home/home.nix;
+              pkgs = pkgs;
             };
-          multipass = home-manager.lib.homeManagerConfiguration {
-              system = "aarch64-linux";
-              homeDirectory = /home/ubuntu;
-              username = "ubuntu";
-              configuration = ./home/home.nix;
-            };
+          # multipass = home-manager.lib.homeManagerConfiguration {
+          #     system = "aarch64-linux";
+          #     homeDirectory = /home/ubuntu;
+          #     username = "ubuntu";
+          #     configuration = ./home/home.nix;
+          #     pkgs = pkgs;
+          #   };
         };
 
         defaultPackage.aarch64-darwin = self.homeConfigurations.mac.activationPackage;

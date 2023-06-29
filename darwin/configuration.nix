@@ -4,9 +4,6 @@
   # $ nix-env -qaP | grep wget
   environment.systemPackages =
     [ 
-      # pkgs.vim
-      # pkgs.yarn
-      # pkgs.home-manager
     ];
   
   # environment.profiles =
@@ -29,6 +26,8 @@
   # Create /etc/bashrc that loads the nix-darwin environment.
   # programs.zsh.enable = true;  # default shell on catalina
   # programs.fish.enable = true;
+  # services.redis.servers."ares".enable=true;
+  # services.redis.servers."ares".port=6379;
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
