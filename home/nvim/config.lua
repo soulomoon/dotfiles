@@ -1,5 +1,54 @@
+-- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- set termguicolors to enable highlight groups
+vim.opt.termguicolors = true
+
+
+local telescope = require("telescope")
+local lga_actions = require("telescope-live-grep-args.actions")
+
+
+telescope.setup {
+  extensions = {
+    live_grep_args = {
+      auto_quoting = true, -- enable/disable auto-quoting
+      -- define mappings, e.g.
+      mappings = { -- extend mappings
+        i = {
+          ["<C-k>"] = lga_actions.quote_prompt(),
+          ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+        },
+      },
+      -- ... also accepts theme settings, for example:
+      -- theme = "dropdown", -- use dropdown theme
+      -- theme = { }, -- use own theme spec
+      -- layout_config = { mirror=true }, -- mirror preview pane
+    }
+  }
+}
+-- vim.keymap.set("n", "<C-f>", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
+
+-- empty setup using defaults
+-- require("nvim-tree").setup()
+
+-- OR setup with some options
+require("nvim-tree").setup({
+  sort_by = "case_sensitive",
+  view = {
+    width = 30,
+  },
+  renderer = {
+    group_empty = true,
+  },
+  filters = {
+    dotfiles = true,
+  },
+})
 
 require("nvim-treesitter.configs").setup {
+    auto_install = false, 
     highlight = {
         enable = true
     },
@@ -11,10 +60,21 @@ require("nvim-treesitter.configs").setup {
     }
 }
 require("trouble").setup {}
+vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle() end)
+vim.keymap.set("n", "<leader>xw", function() require("trouble").toggle("workspace_diagnostics") end)
+vim.keymap.set("n", "<leader>xd", function() require("trouble").toggle("document_diagnostics") end)
+vim.keymap.set("n", "<leader>xq", function() require("trouble").toggle("quickfix") end)
+vim.keymap.set("n", "<leader>xl", function() require("trouble").toggle("loclist") end)
+vim.keymap.set("n", "gR", function() require("trouble").toggle("lsp_references") end)
 
+
+
+vim.o.pumblend = 30
+vim.o.winblend = 30
+vim.o.updatetime = 500
 -- Add additional capabilities supported by nvim-cmp
 local capabilities    = vim.lsp.protocol.make_client_capabilities()
-capabilities          = require('cmp_nvim_lsp').update_capabilities(capabilities)
+-- capabilities          = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local nvim_lsp    = require('lspconfig')
 local on_attach   = function(client, bufnr)
@@ -33,6 +93,21 @@ local on_attach   = function(client, bufnr)
         noremap   = true,
         silent    = true
     }
+    
+    vim.api.nvim_create_autocmd("CursorHold", {
+        buffer = bufnr,
+        callback = function()
+          local opts = {
+            focusable = false,
+            close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+            border = 'none',
+            source = 'always',
+            prefix = ' ',
+            scope = 'cursor',
+          }
+          vim.diagnostic.open_float(nil, opts)
+        end
+      })
 
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
@@ -50,9 +125,15 @@ local on_attach   = function(client, bufnr)
     buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
     buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
     buf_set_keymap('n', '<space>lf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    buf_set_keymap('v', 'f', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
     buf_set_keymap('n', '<space>.', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
     buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
 end
+-- haskell = {
+--     cabalFormattingProvider = "cabalfmt",
+--     formattingProvider = "ormolu"
+--   }
+
 
 local servers = {'hls'}
 for _, lsp in ipairs(servers) do
@@ -64,6 +145,15 @@ for _, lsp in ipairs(servers) do
         }
     }
 end
+
+local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+
+
+
 
 vim.o.completeopt = 'menuone,noselect'
 local luasnip = require 'luasnip'
@@ -105,11 +195,54 @@ cmp.setup {
     }}
 }
 
-require("indent_blankline").setup {
-    -- for example, context is off by default, use this to turn it on
-    show_current_context = true,
-    show_current_context_start = true,
-}
+-- require("indent_blankline").setup {
+--     -- for example, context is off by default, use this to turn it on
+--     show_current_context = true,
+--     show_current_context_start = true,
+-- }
+
+require'nvim-web-devicons'.setup {
+    -- your personnal icons can go here (to override)
+    -- you can specify color or cterm_color instead of specifying both of them
+    -- DevIcon will be appended to `name`
+    override = {
+     zsh = {
+       icon = "",
+       color = "#428850",
+       cterm_color = "65",
+       name = "Zsh"
+     }
+    };
+    -- globally enable different highlight colors per icon (default to true)
+    -- if set to false all icons will have the default icon's color
+    color_icons = true;
+    -- globally enable default icons (default to false)
+    -- will get overriden by `get_icons` option
+    default = true;
+    -- globally enable "strict" selection of icons - icon will be looked up in
+    -- different tables, first by filename, and if not found by extension; this
+    -- prevents cases when file doesn't have any extension but still gets some icon
+    -- because its name happened to match some extension (default to false)
+    strict = true;
+    -- same as `override` but specifically for overrides by filename
+    -- takes effect when `strict` is true
+    override_by_filename = {
+     [".gitignore"] = {
+       icon = "",
+       color = "#f1502f",
+       name = "Gitignore"
+     }
+    };
+    -- same as `override` but specifically for overrides by extension
+    -- takes effect when `strict` is true
+    override_by_extension = {
+     ["log"] = {
+       icon = "",
+       color = "#81e043",
+       name = "Log"
+     }
+    };
+   }
 
 require('bufferline').setup {}
 
@@ -142,6 +275,9 @@ require("cheatsheet").setup({
     -- don't have the plugin installed (searches runtimepath for
     -- same directory name)
     include_only_installed_plugins = true,
+    telescope_mappings = {
+        ['C-f'] = require('telescope').extensions.live_grep_args.live_grep_args
+    }
 })
 
 
@@ -208,25 +344,19 @@ require("toggleterm").setup{
     -- open_mapping = [[<ESC>]], 
 }
 
-require('neorg').setup {
-    -- Tell Neorg what modules to load
-    load = {
-        ["core.defaults"] = {}, -- Load all the default modules
-        ["core.keybinds"] = { -- Configure core.keybinds
-            config = {
-                default_keybinds = true, -- Generate the default keybinds
-                neorg_leader = "<Leader>o" -- This is the default if unspecified
-            }
+local wk = require("which-key")
+wk.register({
+    ["<leader>"] = {
+        f = {
+          name = "telescope",
+        --   f = { "<cmd>Telescope find_files<cr>", "Find File" },
+        --   r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
+        --   n = { "<cmd>enew<cr>", "New File" },
+          g = { require('telescope').extensions.live_grep_args.live_grep_args, "telescope livegrep args" } -- you can also pass functions!
         },
-        ["core.norg.concealer"] = {}, -- Allows for use of icons
-        ["core.norg.dirman"] = { -- Manage your directories with Neorg
-            config = {
-                workspaces = {
-                    my_workspace = "~/org"
-                }
-            }
-        }
-    },
-}
+      },
+  }, {})
+wk.setup {}
 
-require("which-key").setup {}
+require('hlargs').setup()
+

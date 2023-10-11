@@ -2,7 +2,11 @@
   description = "soulomoon's systems";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/cfa78cb43389635df0a9086cb31b74d3c3693935";
+    nixpkgs.url = "github:nixos/nixpkgs/87828a0e03d1418e848d3dd3f3014a632e4a4f64";
+    # nixpkgs.url = "github:nixos/nixpkgs-channels/nixos-unstable";
+    unstable.url = "github:nixos/nixpkgs-channels/nixos-unstable";
+
+    
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -16,7 +20,7 @@
   };
 
 
-  outputs = { self, nixpkgs, home-manager, darwin }: 
+  outputs = { self, nixpkgs, home-manager, darwin, unstable, ... }: 
     {
         nixosConfigurations.nixosDesk = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -41,21 +45,30 @@
           ];
         };
 
+        nixpkgs.config = {
+          allowUnfree = true;
+        };
+
         homeConfigurations = {
-          mac = with import nixpkgs { system = "aarch64-darwin"; }; 
+          mac = 
+            with import nixpkgs { system = "aarch64-darwin"; }; 
+            let pkgs-unstable = import unstable {  inherit system; };
+            in
             home-manager.lib.homeManagerConfiguration {
-                system = "aarch64-darwin";
-                homeDirectory = /Users/ares;
-                username = "ares";
-                pkgs = pkgs;
-                configuration = { config, pkgs, ... }:
-                  {
-                    nixpkgs.overlays = [ ];
-                    nixpkgs.config = {
-                      allowUnfree = true;
-                    };
-                    imports = [ ./home/home.nix ];
-                  };
+                inherit pkgs;
+                modules = [
+                    ./home/home.nix
+                    {
+                      home = {
+                        username = "ares";
+                        homeDirectory = "/Users/ares";
+                        # stateVersion = "22.05";
+                      };
+                    }
+                ];
+                # extraSpecialArgs = {
+                #     inherit pkgs-unstable;
+                # };
               };
           nixos = with import nixpkgs { system = "x86_64-linux"; };
           home-manager.lib.homeManagerConfiguration {

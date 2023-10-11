@@ -1,5 +1,12 @@
-{ config, pkgs, xdg, ... }:
+{ config, pkgs, xdg, pkgs-unstable, ... }:
 {
+
+   home.stateVersion = "23.05"; # Please read the comment before changing.
+  #  nixpkgs.overlays = [
+  #   (self: super: {
+  #     fcitx-engines = pkgs.fcitx5;
+  #   })
+  # ];
   imports = [ 
     ./vim 
     ./nvim 
