@@ -18,7 +18,7 @@ let
       owner = "m-demare";
       repo = "hlargs.nvim";
       rev = "master";
-      sha256 = "bH0OOf5T4Z96Td4ZBV1q8DI/bO1pV8DwqEWho6jeggg=";
+      sha256 = "A3EGSEMf94Xl9kczrS31tFGndFtgnS3tOoc4iz8/CxU=";
     };
   };
   nvim-plugintree = (pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [
@@ -44,6 +44,8 @@ in
     enable = true;
     # package = pkgs-unstable.neovim;
     plugins = vimPlugins ++ (with pkgs.vimPlugins; [
+      dressing-nvim
+      legendary-nvim
       nvim-tree-lua
       hlargs-nvim
       which-key-nvim
@@ -52,8 +54,10 @@ in
       telescope-nvim
       nvim-lspconfig
       nvim-cmp
+      fidget-nvim
       cmp-nvim-lsp
       cmp_luasnip
+
       luasnip
       nvim-peekup
       telescope-live-grep-args-nvim

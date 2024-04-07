@@ -73,8 +73,7 @@ vim.o.pumblend = 30
 vim.o.winblend = 30
 vim.o.updatetime = 500
 -- Add additional capabilities supported by nvim-cmp
-local capabilities    = vim.lsp.protocol.make_client_capabilities()
--- capabilities          = require('cmp_nvim_lsp').update_capabilities(capabilities)
+local capabilities    = require('cmp_nvim_lsp').default_capabilities()
 
 local nvim_lsp    = require('lspconfig')
 local on_attach   = function(client, bufnr)
@@ -135,7 +134,7 @@ end
 --   }
 
 
-local servers = {'hls'}
+local servers = { }
 for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
         on_attach = on_attach,
@@ -145,6 +144,42 @@ for _, lsp in ipairs(servers) do
         }
     }
 end
+
+vim.lsp.set_log_level("debug")
+
+nvim_lsp.hls.setup{
+        filetypes = { 'haskell', 'lhaskell', 'cabal' },
+        cmd = {"/Users/ares/.cabal/bin/haskell-language-server", "--lsp"},
+        settings = {
+          haskell = {
+              plugin = {
+                semanticTokens = {
+                  config = {
+                      classMethodToken= "method",
+                      classToken = "class",
+                      dataConstructorToken=  "enumMember",
+                      functionToken= "function",
+                      moduleToken= "namespace",
+                      patternSynonymToken= "macro",
+                      recordFieldToken= "property",
+                      typeConstructorToken= "enum",
+                      typeFamilyToken= "interface",
+                      typeSynonymToken= "type",
+                      typeVariableToken= "typeParameter",
+                      variableToken= "variable"
+                  },
+                  globalOn = true
+              }
+            }
+          }
+        },
+        on_attach = on_attach,
+        capabilities = capabilities,
+        flags = {
+            debounce_text_changes = 150
+        }
+}
+
 
 local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
 for type, icon in pairs(signs) do
@@ -253,6 +288,8 @@ require'lualine'.setup {
         'symbols-outline',
     }
 }
+require("symbols-outline").setup()
+
 
 require("cheatsheet").setup({
     -- Whether to show bundled cheatsheets
@@ -284,60 +321,6 @@ require("cheatsheet").setup({
 
 
 
-vim.g.symbols_outline = {
-    highlight_hovered_item = true,
-    show_guides = true,
-    auto_preview = true,
-    position = 'right',
-    relative_width = true,
-    width = 30,
-    auto_close = false,
-    show_numbers = false,
-    show_relative_numbers = false,
-    show_symbol_details = true,
-    preview_bg_highlight = 'Pmenu',
-    keymaps = { -- These keymaps can be a string or a table for multiple keys
-        close = {"q"},
-        goto_location = "<Cr>",
-        focus_location = "o",
-        hover_symbol = "<C-space>",
-        toggle_preview = "K",
-        rename_symbol = "r",
-        code_actions = "a",
-    },
-    lsp_blacklist = {},
-    symbol_blacklist = {},
-    symbols = {
-        File = {icon = "", hl = "TSURI"},
-        Module = {icon = "", hl = "TSNamespace"},
-        Namespace = {icon = "", hl = "TSNamespace"},
-        Package = {icon = "", hl = "TSNamespace"},
-        Class = {icon = "𝓒", hl = "TSType"},
-        Method = {icon = "ƒ", hl = "TSMethod"},
-        Property = {icon = "", hl = "TSMethod"},
-        Field = {icon = "", hl = "TSField"},
-        Constructor = {icon = "", hl = "TSConstructor"},
-        Enum = {icon = "ℰ", hl = "TSType"},
-        Interface = {icon = "ﰮ", hl = "TSType"},
-        Function = {icon = "", hl = "TSFunction"},
-        Variable = {icon = "", hl = "TSConstant"},
-        Constant = {icon = "", hl = "TSConstant"},
-        String = {icon = "𝓐", hl = "TSString"},
-        Number = {icon = "#", hl = "TSNumber"},
-        Boolean = {icon = "⊨", hl = "TSBoolean"},
-        Array = {icon = "", hl = "TSConstant"},
-        Object = {icon = "⦿", hl = "TSType"},
-        Key = {icon = "🔐", hl = "TSType"},
-        Null = {icon = "NULL", hl = "TSType"},
-        EnumMember = {icon = "", hl = "TSField"},
-        Struct = {icon = "𝓢", hl = "TSType"},
-        Event = {icon = "🗲", hl = "TSType"},
-        Operator = {icon = "+", hl = "TSOperator"},
-        TypeParameter = {icon = "𝙏", hl = "TSParameter"}
-    }
-}
-
-
 
 
 require("toggleterm").setup{ 
@@ -360,3 +343,157 @@ wk.setup {}
 
 require('hlargs').setup()
 
+vim.api.nvim_set_keymap("n", "<a-2>", "<esc><cmd>lua vim.diagnostic.goto_prev()<cr>", {}) -- pre error
+vim.api.nvim_set_keymap("n", "<a-3>", "<esc><cmd>lua vim.diagnostic.goto_next()<cr>", {}) -- next error
+
+require('legendary').setup({
+  -- Initial keymaps to bind, can also be a function that returns the list
+  keymaps = {},
+  -- Initial commands to bind, can also be a function that returns the list
+  commands = {},
+  -- Initial augroups/autocmds to bind, can also be a function that returns the list
+  autocmds = {},
+  -- Initial functions to bind, can also be a function that returns the list
+  funcs = {},
+  -- Initial item groups to bind,
+  -- note that item groups can also
+  -- be under keymaps, commands, autocmds, or funcs;
+  -- can also be a function that returns the list
+  itemgroups = {},
+  -- default opts to merge with the `opts` table
+  -- of each individual item
+  default_opts = {
+    -- for example, { silent = true, remap = false }
+    keymaps = {},
+    -- for example, { args = '?', bang = true }
+    commands = {},
+    -- for example, { buf = 0, once = true }
+    autocmds = {},
+  },
+  -- Customize the prompt that appears on your vim.ui.select() handler
+  -- Can be a string or a function that returns a string.
+  select_prompt = ' legendary.nvim ',
+  -- Character to use to separate columns in the UI
+  col_separator_char = '│',
+  -- Optionally pass a custom formatter function. This function
+  -- receives the item as a parameter and the mode that legendary
+  -- was triggered from (e.g. `function(item, mode): string[]`)
+  -- and must return a table of non-nil string values for display.
+  -- It must return the same number of values for each item to work correctly.
+  -- The values will be used as column values when formatted.
+  -- See function `default_format(item)` in
+  -- `lua/legendary/ui/format.lua` to see default implementation.
+  default_item_formatter = nil,
+  -- Customize icons used by the default item formatter
+  icons = {
+    -- keymap items list the modes in which the keymap applies
+    -- by default, you can show an icon instead by setting this to
+    -- a non-nil icon
+    keymap = nil,
+    command = '',
+    fn = '󰡱',
+    itemgroup = '',
+  },
+  -- Include builtins by default, set to false to disable
+  include_builtin = true,
+  -- Include the commands that legendary.nvim creates itself
+  -- in the legend by default, set to false to disable
+  include_legendary_cmds = true,
+  -- Options for list sorting. Note that fuzzy-finders will still
+  -- do their own sorting. For telescope.nvim, you can set it to use
+  -- `require('telescope.sorters').fuzzy_with_index_bias({})` when
+  -- triggered via `legendary.nvim`. Example config for `dressing.nvim`:
+  --
+  require('dressing').setup({
+   select = {
+     get_config = function(opts)
+       if opts.kind == 'legendary.nvim' then
+         return {
+           telescope = {
+             sorter = require('telescope.sorters').fuzzy_with_index_bias({})
+           }
+         }
+       else
+         return {}
+       end
+     end
+   }
+  }),
+
+  sort = {
+    -- put most recently selected item first, this works
+    -- both within global and item group lists
+    most_recent_first = true,
+    -- sort user-defined items before built-in items
+    user_items_first = true,
+    -- sort the specified item type before other item types,
+    -- value must be one of: 'keymap', 'command', 'autocmd', 'group', nil
+    item_type_bias = nil,
+    -- settings for frecency sorting.
+    -- https://en.wikipedia.org/wiki/Frecency
+    -- Set `frecency = false` to disable.
+    -- this feature requires sqlite.lua (https://github.com/kkharji/sqlite.lua)
+    -- and will be automatically disabled if sqlite is not available.
+    -- NOTE: THIS TAKES PRECEDENCE OVER OTHER SORT OPTIONS!
+    frecency = {
+      -- the directory to store the database in
+      db_root = string.format('%s/legendary/', vim.fn.stdpath('data')),
+      -- the maximum number of timestamps for a single item
+      -- to store in the database
+      max_timestamps = 10,
+    },
+  },
+  lazy_nvim = {
+    -- Automatically register keymaps that are defined on lazy.nvim plugin specs
+    -- using the `keys = {}` property.
+    auto_register = false,
+  },
+  which_key = {
+    -- Automatically add which-key tables to legendary
+    -- see ./doc/WHICH_KEY.md for more details
+    auto_register = true,
+    -- you can put which-key.nvim tables here,
+    -- or alternatively have them auto-register,
+    -- see ./doc/WHICH_KEY.md
+    mappings = {},
+    opts = {},
+    -- controls whether legendary.nvim actually binds they keymaps,
+    -- or if you want to let which-key.nvim handle the bindings.
+    -- if not passed, true by default
+    do_binding = true,
+    -- controls whether to use legendary.nvim item groups
+    -- matching your which-key.nvim groups; if false, all keymaps
+    -- are added at toplevel instead of in a group.
+    use_groups = true,
+  },
+  -- Which extensions to load; no extensions are loaded by default.
+  -- Setting the plugin name to `false` disables loading the extension.
+  -- Setting it to any other value will attempt to load the extension,
+  -- and pass the value as an argument to the extension, which should
+  -- be a single function. Extensions are modules under `legendary.extensions.*`
+  -- which return a single function, which is responsible for loading and
+  -- initializing the extension.
+  extensions = {
+    nvim_tree = false,
+    smart_splits = false,
+    op_nvim = false,
+    diffview = false,
+  },
+  scratchpad = {
+    -- How to open the scratchpad buffer,
+    -- 'current' for current window, 'float'
+    -- for floating window
+    view = 'float',
+    -- How to show the results of evaluated Lua code.
+    -- 'print' for `print(result)`, 'float' for a floating window.
+    results_view = 'float',
+    -- Border style for floating windows related to the scratchpad
+    float_border = 'rounded',
+    -- Whether to restore scratchpad contents from a cache file
+    keep_contents = true,
+  },
+  -- Directory used for caches
+  cache_path = string.format('%s/legendary/', vim.fn.stdpath('cache')),
+  -- Log level, one of 'trace', 'debug', 'info', 'warn', 'error', 'fatal'
+  log_level = 'info',
+})

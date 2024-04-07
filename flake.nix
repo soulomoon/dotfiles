@@ -2,13 +2,13 @@
   description = "soulomoon's systems";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/87828a0e03d1418e848d3dd3f3014a632e4a4f64";
+    nixpkgs.url = "github:nixos/nixpkgs/master";
     # nixpkgs.url = "github:nixos/nixpkgs-channels/nixos-unstable";
     unstable.url = "github:nixos/nixpkgs-channels/nixos-unstable";
 
     
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

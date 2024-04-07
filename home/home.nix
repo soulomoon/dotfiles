@@ -1,12 +1,15 @@
 { config, pkgs, xdg, pkgs-unstable, ... }:
 {
 
-   home.stateVersion = "23.05"; # Please read the comment before changing.
+  #  home.stateVersion = "23.05"; # Please read the comment before changing.
+   home.stateVersion = "24.05"; # Please read the comment before changing.
   #  nixpkgs.overlays = [
   #   (self: super: {
   #     fcitx-engines = pkgs.fcitx5;
   #   })
   # ];
+  home.file = {
+  };
   imports = [ 
     ./vim 
     ./nvim 
@@ -17,6 +20,7 @@
   home.username = "ares";
   home.packages = with pkgs; [
     bash
+    neovide
     # macvim
     # pkgs is the set of all packages in the default home.nix implementation
     llvm cmake flex bison 
@@ -29,9 +33,9 @@
     # haskellPackages.haskell-language-server
     # haskellPackages.Agda
     # nodejs 
-    swiProlog 
+    # swiProlog 
     # jdk 
-    clojure
+    # clojure
     # database
     sqlite
     cachix

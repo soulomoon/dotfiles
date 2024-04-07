@@ -1,4 +1,10 @@
 
+require("fidget").setup {}
+
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.signcolumn = "number"
+
 vim.o.signcolumn = "yes"
 require("catppuccin").setup({
   flavour = "macchiato", -- latte, frappe, macchiato, mocha
