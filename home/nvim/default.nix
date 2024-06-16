@@ -18,7 +18,7 @@ let
       owner = "m-demare";
       repo = "hlargs.nvim";
       rev = "master";
-      sha256 = "A3EGSEMf94Xl9kczrS31tFGndFtgnS3tOoc4iz8/CxU=";
+      sha256 = "V3XG1SCBz+EvObW7JSNIUxGZLv6zoRXyap7nRETmUA8=";
     };
   };
   nvim-plugintree = (pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [
@@ -74,10 +74,10 @@ in
       nvim-plugintree
 
     ]);
-    extraConfig = builtins.readFile ./config.vim 
-      + "lua << EOF\n" 
-      + builtins.readFile ./config.lua 
-      + builtins.readFile ./ui.lua 
+    extraConfig = builtins.readFile ./config.vim
+      + "lua << EOF\n"
+      + builtins.readFile ./config.lua
+      + builtins.readFile ./ui.lua
       + "\nEOF"
     ;
 

@@ -10,21 +10,21 @@
   # ];
   home.file = {
   };
-  imports = [ 
-    ./vim 
-    ./nvim 
+  imports = [
+    ./vim
+    ./nvim
     ./zsh
     ./tmux
-    ./fish
+    # ./fish
     ];
   home.username = "ares";
   home.packages = with pkgs; [
     bash
-    neovide
+    # neovide
     # macvim
     # pkgs is the set of all packages in the default home.nix implementation
-    llvm cmake flex bison 
-    direnv
+    llvm cmake flex bison
+    # direnv
     # gcc
     # ghc
     # stack
@@ -32,9 +32,9 @@
     # haskellPackages.implicit-hie
     # haskellPackages.haskell-language-server
     # haskellPackages.Agda
-    # nodejs 
-    # swiProlog 
-    # jdk 
+    # nodejs
+    # swiProlog
+    # jdk
     # clojure
     # database
     sqlite
@@ -49,7 +49,7 @@
     docker
     redis
     # irssi
-    
+
     # btop
     # libsecret
   ];
