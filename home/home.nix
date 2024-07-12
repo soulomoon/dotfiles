@@ -21,6 +21,7 @@
   home.packages = with pkgs; [
     bash
     neofetch
+    gh
     # neovide
     # macvim
     # pkgs is the set of all packages in the default home.nix implementation
