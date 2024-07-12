@@ -20,6 +20,7 @@ in {
     enable = true;
     initExtra = ''
       export TERM="xterm-256color"
+      export PATH=~/.ghcup/bin:$PATH
       export PATH=~/bin:$PATH
       export PATH="/opt/homebrew/opt/m4/bin:$PATH"
       export ConfigFile="${ConfigFile}"
