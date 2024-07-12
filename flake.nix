@@ -3,10 +3,9 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/master";
-    # nixpkgs.url = "github:nixos/nixpkgs-channels/nixos-unstable";
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
+
     unstable.url = "github:nixos/nixpkgs-channels/nixos-unstable";
-
-
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -20,7 +19,7 @@
   };
 
 
-  outputs = { self, nixpkgs, home-manager, darwin, unstable, ... }:
+  outputs = { self, nixpkgs, home-manager, darwin, unstable, vscode-server, ... }:
     {
         nixosConfigurations.nixosDesk = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -34,6 +33,10 @@
           modules =
           [
             ./nixos/configuration.nix
+            vscode-server.nixosModules.default
+              ({ config, pkgs, ... }: {
+                services.vscode-server.enable = true;
+              })
           ];
         };
 
@@ -83,13 +86,6 @@
               }
             ];
           };
-          # multipass = home-manager.lib.homeManagerConfiguration {
-          #     system = "aarch64-linux";
-          #     homeDirectory = /home/ubuntu;
-          #     username = "ubuntu";
-          #     configuration = ./home/home.nix;
-          #     pkgs = pkgs;
-          #   };
         };
 
         defaultPackage.aarch64-darwin = self.homeConfigurations.mac.activationPackage;

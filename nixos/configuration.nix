@@ -3,88 +3,86 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
+
 {
-
-  nix = {
-    package = pkgs.nixFlakes;
-    extraOptions = ''
-                  experimental-features = nix-command flakes
-    '';
-
-  };
   imports =
     [ # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-    ./nixos-vscode-ssh-fix
+      ./hardware-configuration.nix
     ];
-  services.vscode-server.enable = true;
 
-  # Use the systemd-boot EFI boot loader.
+  # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  services.logind.lidSwitch = "lock";
 
-  networking.networkmanager = {
-    enable = true;
-    wifi.macAddress = "preserve";
-    ethernet.macAddress = "preserve";
+  networking.hostName = "nixos"; # Define your hostname.
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+  # Configure network proxy if necessary
+  # networking.proxy.default = "http://user:password@proxy:port/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
+  # Enable networking
+  networking.networkmanager.enable = true;
+
+  # Set your time zone.
+  time.timeZone = "Asia/Hong_Kong";
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_HK.UTF-8";
+
+  # Configure keymap in X11
+  services.xserver = {
+    xkb.layout = "us";
+    xkb.variant = "";
   };
-  networking.useDHCP = false;
-  users.groups.docker = {};
+
+  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.ares = {
-    name = "ares";
-    home =  "/home/ares";
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" ]; # Enable ‘sudo’ for the user.
+    description = "ares";
+    shell = pkgs.zsh;
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [];
   };
 
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
   environment.systemPackages = with pkgs; [
-    # myVim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    #wget
-    ## python
-    #gcc
-    ## python3
-    ## nodejs
-    #gtop
-    ## tldr
-    #git
-
-    #stack
-    #haskell-language-server
-    #ghc
-    #cabal-install
-    #haskellPackages.implicit-hie
+    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    zsh
+    wget
+    git
   ];
+
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  # programs.mtr.enable = true;
+  # programs.gnupg.agent = {
+  #   enable = true;
+  #   enableSSHSupport = true;
+  # };
+
+  # List services that you want to enable:
+
   # Enable the OpenSSH daemon.
-  services.openssh = {
-	enable = true;
-	passwordAuthentication = true;
-	permitRootLogin = "yes";
-	};
+  services.openssh.enable = true;
 
+  # Open ports in the firewall.
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
+  # Or disable the firewall altogether.
+  # networking.firewall.enable = false;
 
-  users.users."ares".openssh.authorizedKeys.keys = [
-      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDMHfkusbm1hdJ4GnJDWazEgMTH/drADitbZQUdKsuzMd4/027r/ghPLGe23Ar+XIhjJYzsHQ8q4n7KuMPd8WUWvYmTw1yk6A7S2XaKOUnup5yTm18vQmF/4bUZc0RdN6bc46R4Z6QA3I9lWU4VRvTExDep21rg1lRDETPuoQZyuTQ4+yi4nw5bmtDtgDbn+UBtMXoLgtk+PVOt9tpMKw3z9nCCkRwGYTLkECf78O40vpvY8IIKS539UUh1rJgCdugndB1BC0QQ20ICR72JokmdoEpSNfxSs8o+l84Jk7N2QW1sHqQt5FG6k7vIZoKKIleTuZ9qbe9FU4NTy8TeE4D07YTPCgXmflBoUaZSifke4aV1aCLLknfGLqlHqJL4u6MwwYIEB2R7QBtRwlDdpJHAKEIP/KdUfGOKr2wAJ56d4roDLpVGWdVTWxGJlMKHOnkenm8n8wucovs6jDX6YDxeNwRR0zXLuoRu4mngROhhepbNPGJ6rBCwDwsTdsSafUPODI7gpQYQbvev8lhCZrhBt/FpjTgC2rRerOR29oxch9OT1UXgX+LtvZ7dmGhYFO0s8uS8LEtYf/P+5Kz/Zj7dTK9N2vr0KfqP0vL0g4efw5tJx0KFoLs6tFPZczvTvpz7Qe1W1ORtTKuGSgb3xhNd7XOyhhZDO9FTr4cITU8lQQ== ares" # content of authorized_keys file
-  ];
-
-  users.users."root".openssh.authorizedKeys.keys = [
-      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDMHfkusbm1hdJ4GnJDWazEgMTH/drADitbZQUdKsuzMd4/027r/ghPLGe23Ar+XIhjJYzsHQ8q4n7KuMPd8WUWvYmTw1yk6A7S2XaKOUnup5yTm18vQmF/4bUZc0RdN6bc46R4Z6QA3I9lWU4VRvTExDep21rg1lRDETPuoQZyuTQ4+yi4nw5bmtDtgDbn+UBtMXoLgtk+PVOt9tpMKw3z9nCCkRwGYTLkECf78O40vpvY8IIKS539UUh1rJgCdugndB1BC0QQ20ICR72JokmdoEpSNfxSs8o+l84Jk7N2QW1sHqQt5FG6k7vIZoKKIleTuZ9qbe9FU4NTy8TeE4D07YTPCgXmflBoUaZSifke4aV1aCLLknfGLqlHqJL4u6MwwYIEB2R7QBtRwlDdpJHAKEIP/KdUfGOKr2wAJ56d4roDLpVGWdVTWxGJlMKHOnkenm8n8wucovs6jDX6YDxeNwRR0zXLuoRu4mngROhhepbNPGJ6rBCwDwsTdsSafUPODI7gpQYQbvev8lhCZrhBt/FpjTgC2rRerOR29oxch9OT1UXgX+LtvZ7dmGhYFO0s8uS8LEtYf/P+5Kz/Zj7dTK9N2vr0KfqP0vL0g4efw5tJx0KFoLs6tFPZczvTvpz7Qe1W1ORtTKuGSgb3xhNd7XOyhhZDO9FTr4cITU8lQQ== ares" # content of authorized_keys file
-  ];
-
-  networking.interfaces.enp0s20f0u1u1.wakeOnLan.enable= true;
-
-  system.stateVersion = "21.05"; # Did you read the comment?
-  nixpkgs.config.allowUnfree = true; 
-  users.defaultUserShell = pkgs.zsh;
-
-  nix.settings.trusted-users = [ "root" "ares" ];
-  networking.firewall.allowedTCPPorts = [ 25500 ];
-
-  virtualisation.docker.enable = true;
-  virtualisation.oci-containers.containers.subconvertor = {
-      image = "tindy2013/subconverter:latest";
-      ports = ["25500:25500/tcp"];
-      autoStart = true;
-  };
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  system.stateVersion = "24.05"; # Did you read the comment?
+  programs.zsh.enable=true;
+  # programs.home-manager.enable = true;
 }
-

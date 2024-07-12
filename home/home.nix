@@ -20,6 +20,7 @@
   home.username = "ares";
   home.packages = with pkgs; [
     bash
+    neofetch
     # neovide
     # macvim
     # pkgs is the set of all packages in the default home.nix implementation
