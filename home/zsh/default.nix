@@ -1,21 +1,62 @@
 { config, pkgs, xdg, ... }:
 
 let ConfigFile = "~/.config/nixpkgs";
+    shellAliases = {
+      mc = "code ${ConfigFile}";
+      ll = "ls -l";
+      # replace home
+      # updatehome = "nix run ${ConfigFile}";
+      uh = "nix run ${ConfigFile}";
+      # updateNixos = "sudo nixos-rebuild switch";
+      updateNixos= "sudo nixos-rebuild switch --flake ${ConfigFile}";
+      updateDarwin= "darwin-rebuild switch --flake ${ConfigFile}";
+      updateHomeMac = "home-manager switch --flake ${ConfigFile}/#mac -v";
+      updateHomeNixos = "home-manager switch --flake ${ConfigFile}/#nixos -v";
+
+      t = "tmux attach -t default || tmux new -s default";
+    };
 in {
+
+  # programs.carapace = {
+  #   enable = true;
+  #   enableNushellIntegration = true;
+  # };
+  # programs.nushell = {
+  #   enable = true;
+  #   configFile.text = ''
+  #     $env.PATH = (
+  #       $env.PATH
+  #       | split row (char esep)
+  #       | append /usr/local/bin
+  #       | append ($env.CARGO_HOME | path join bin)
+  #       | append ($env.HOME | path join .local bin)
+  #       | uniq # filter so the paths are unique
+  #     )
+
+  #     $env.config.completions.external = {
+  #       enable: true
+  #       max_results: 100
+  #       completer: $completer
+  #     }
+  #   '';
+  # };
   programs.starship = {
     enable = true;
-    # Configuration written to ~/.config/starship.toml
-    settings = {
-      # add_newline = false;
+    enableNushellIntegration = true;
 
-      # character = {
-      #   success_symbol = "[➜](bold green)";
-      #   error_symbol = "[➜](bold red)";
-      # };
-
-      # package.disabled = true;
-    };
   };
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = ''
+        fish_vi_key_bindings
+        fish_add_path ~/.ghcup/bin
+        fish_add_path ~/bin
+        fish_add_path /opt/homebrew/bin/
+      '';
+    inherit shellAliases;
+  };
+
+
   programs.zsh = {
     enable = true;
     initExtra = ''
@@ -35,23 +76,7 @@ in {
       # export PATH="/opt/homebrew/opt/sphinx-doc/bin:$PATH"
       # for ghc compilation
     '';
-    shellAliases = {
-      mc = "code ${ConfigFile}";
-      ll = "ls -l";
-      # replace home
-      # updatehome = "nix run ${ConfigFile}";
-      uh = "nix run ${ConfigFile}";
-      # updateNixos = "sudo nixos-rebuild switch";
-      updateNixos= "sudo nixos-rebuild switch --flake ${ConfigFile}";
-      updateDarwin= "darwin-rebuild switch --flake ${ConfigFile}";
-      updateHomeMac = "home-manager switch --flake ${ConfigFile}/#mac -v";
-      updateHomeNixos = "home-manager switch --flake ${ConfigFile}/#nixos -v";
-
-      t = "tmux attach -t default || tmux new -s default";
-    };
-
-
-
+    inherit shellAliases;
     oh-my-zsh = {
       enable = false;
       plugins = [ "brew" "fasd"];
