@@ -49,9 +49,10 @@ in {
     enable = true;
     interactiveShellInit = ''
         fish_vi_key_bindings
+        fish_add_path /Users/ares/.nix-profile/bin/
+        fish_add_path /opt/homebrew/bin/
         fish_add_path ~/.ghcup/bin
         fish_add_path ~/bin
-        fish_add_path /opt/homebrew/bin/
       '';
     inherit shellAliases;
   };
