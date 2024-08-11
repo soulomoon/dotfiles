@@ -13,9 +13,8 @@
   imports = [
     ./vim
     ./nvim
-    ./zsh
+    ./shell
     ./tmux
-    # ./fish
     ];
   home.username = "ares";
   home.packages = with pkgs; [
