@@ -16,4 +16,3 @@ nnoremap <leader>: <cmd>Telescope commands<cr>
 nnoremap <leader>S :lua require('spectre').open()<CR>
 nnoremap <C-f> :lua require('spectre').open()<CR>
 
- 

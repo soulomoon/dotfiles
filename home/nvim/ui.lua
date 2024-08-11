@@ -77,6 +77,16 @@ vim.o.signcolumn = "yes"
 require('onedark').load()
 -- vim.cmd.colorscheme "onedark"
 
+-- vim.api.nvim_set_hl(0, "@lsp.type.namespace", { fg = "#57f049" })
+-- vim.api.nvim_set_hl(0, "@lsp.type.interface", { fg = "#daf049" })
+-- vim.api.nvim_set_hl(0, "@lsp.type.operator", { fg = "#58e462" })
+-- vim.api.nvim_set_hl(0, "@lsp.type.type", { fg = "#f81eba" })
+-- vim.api.nvim_set_hl(0, "@lsp.type.typeParameter", { fg = "#cd4ca0" })
+-- vim.api.nvim_set_hl(0, "@lsp.type.property", { fg = "#ff8811" })
+-- vim.api.nvim_set_hl(0, "@lsp.type.method", { fg = "#1ef1f8" })
+-- vim.api.nvim_set_hl(0, "@lsp.type.class", { fg = "#ffe100" })
+-- vim.api.nvim_set_hl(0, "@lsp.type.variable", { fg = "#EF596F" })
+
 
 -- aplugin.background = colors.bg_dark
 -- aplugin.my_error = util.lighten(colors.red1, 0.3) -- number between 0 and 1. 0 results in white, 1 results in red1

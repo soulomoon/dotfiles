@@ -21,6 +21,10 @@
 
   outputs = { self, nixpkgs, home-manager, darwin, unstable, vscode-server, ... }:
     {
+        programs.neovim = {
+          enable = true;
+          package = self.neovim-nightly-overlay.packages.${nixpkgs.system}.default;
+        };
         nixosConfigurations.nixosDesk = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules =

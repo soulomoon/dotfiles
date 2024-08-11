@@ -3,12 +3,13 @@ let
   vimPlugins =
     with pkgs.vimPlugins; [
       nord-vim
-      onedark-nvim
+      # onedark-nvim
       vim-nix
       trouble-nvim
       nvim-web-devicons
       lsp-colors-nvim
       toggleterm-nvim
+      my-onedark-nvim
       # catppuccin-nvim
       # tokyonight-nvim
       # m-demare-hlargs-nvim
@@ -22,7 +23,17 @@ let
       sha256 = "UAB1vXypJye0UeOo64mHhTuTKcCbwB1AQDFarbLEUAo=";
     };
   };
+  my-onedark-nvim = pkgs.vimUtils.buildVimPlugin {
+    name = "onedark.nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "soulomoon";
+      repo = "onedark.nvim";
+      rev = "master";
+      sha256 = "QMlGHyskoYVLD4UWDBCuj7Cr8YwZh6UHcczR1Dyahjg=";
+    };
+  };
   nvim-plugintree = (pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [
+
     p.c
     p.lua
     p.nix
