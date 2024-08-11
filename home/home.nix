@@ -12,7 +12,7 @@
   };
   imports = [
     ./vim
-    # ./nvim
+    ./nvim
     ./zsh
     ./tmux
     # ./fish

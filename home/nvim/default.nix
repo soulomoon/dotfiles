@@ -3,13 +3,14 @@ let
   vimPlugins =
     with pkgs.vimPlugins; [
       nord-vim
-      onedark-vim
+      onedark-nvim
       vim-nix
       trouble-nvim
       nvim-web-devicons
       lsp-colors-nvim
       toggleterm-nvim
-      catppuccin-nvim
+      # catppuccin-nvim
+      # tokyonight-nvim
       # m-demare-hlargs-nvim
     ];
   hlargs-nvim = pkgs.vimUtils.buildVimPlugin {
@@ -18,7 +19,7 @@ let
       owner = "m-demare";
       repo = "hlargs.nvim";
       rev = "master";
-      sha256 = "V3XG1SCBz+EvObW7JSNIUxGZLv6zoRXyap7nRETmUA8=";
+      sha256 = "UAB1vXypJye0UeOo64mHhTuTKcCbwB1AQDFarbLEUAo=";
     };
   };
   nvim-plugintree = (pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [

@@ -10,6 +10,7 @@ local telescope = require("telescope")
 local lga_actions = require("telescope-live-grep-args.actions")
 
 
+
 telescope.setup {
   extensions = {
     live_grep_args = {
@@ -48,7 +49,7 @@ require("nvim-tree").setup({
 })
 
 require("nvim-treesitter.configs").setup {
-    auto_install = false, 
+    auto_install = false,
     highlight = {
         enable = true
     },
@@ -57,7 +58,8 @@ require("nvim-treesitter.configs").setup {
     },
     incremental_selection = {
         enable = true
-    }
+    },
+    ensure_installed = {}
 }
 require("trouble").setup {}
 vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle() end)
@@ -92,7 +94,7 @@ local on_attach   = function(client, bufnr)
         noremap   = true,
         silent    = true
     }
-    
+
     vim.api.nvim_create_autocmd("CursorHold", {
         buffer = bufnr,
         callback = function()
@@ -149,7 +151,7 @@ vim.lsp.set_log_level("debug")
 
 nvim_lsp.hls.setup{
         filetypes = { 'haskell', 'lhaskell', 'cabal' },
-        cmd = {"/Users/ares/.cabal/bin/haskell-language-server", "--lsp"},
+        cmd = {"/Users/ares/.ghcup/bin/haskell-language-server-wrapper", "--lsp"},
         settings = {
           haskell = {
               plugin = {
@@ -286,7 +288,8 @@ require'lualine'.setup {
     extensions = {
         'quickfix',
         'symbols-outline',
-    }
+    },
+    theme = 'onedark'
 }
 require("symbols-outline").setup()
 
@@ -323,8 +326,8 @@ require("cheatsheet").setup({
 
 
 
-require("toggleterm").setup{ 
-    -- open_mapping = [[<ESC>]], 
+require("toggleterm").setup{
+    -- open_mapping = [[<ESC>]],
 }
 
 local wk = require("which-key")
@@ -448,24 +451,6 @@ require('legendary').setup({
     -- using the `keys = {}` property.
     auto_register = false,
   },
-  which_key = {
-    -- Automatically add which-key tables to legendary
-    -- see ./doc/WHICH_KEY.md for more details
-    auto_register = true,
-    -- you can put which-key.nvim tables here,
-    -- or alternatively have them auto-register,
-    -- see ./doc/WHICH_KEY.md
-    mappings = {},
-    opts = {},
-    -- controls whether legendary.nvim actually binds they keymaps,
-    -- or if you want to let which-key.nvim handle the bindings.
-    -- if not passed, true by default
-    do_binding = true,
-    -- controls whether to use legendary.nvim item groups
-    -- matching your which-key.nvim groups; if false, all keymaps
-    -- are added at toplevel instead of in a group.
-    use_groups = true,
-  },
   -- Which extensions to load; no extensions are loaded by default.
   -- Setting the plugin name to `false` disables loading the extension.
   -- Setting it to any other value will attempt to load the extension,
@@ -478,6 +463,24 @@ require('legendary').setup({
     smart_splits = false,
     op_nvim = false,
     diffview = false,
+    which_key = {
+      -- Automatically add which-key tables to legendary
+      -- see ./doc/WHICH_KEY.md for more details
+      auto_register = true,
+      -- you can put which-key.nvim tables here,
+      -- or alternatively have them auto-register,
+      -- see ./doc/WHICH_KEY.md
+      mappings = {},
+      opts = {},
+      -- controls whether legendary.nvim actually binds they keymaps,
+      -- or if you want to let which-key.nvim handle the bindings.
+      -- if not passed, true by default
+      do_binding = true,
+      -- controls whether to use legendary.nvim item groups
+      -- matching your which-key.nvim groups; if false, all keymaps
+      -- are added at toplevel instead of in a group.
+      use_groups = true,
+    }
   },
   scratchpad = {
     -- How to open the scratchpad buffer,
