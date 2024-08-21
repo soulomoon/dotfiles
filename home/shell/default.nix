@@ -12,6 +12,7 @@ let ConfigFile = "~/.config/nixpkgs";
       updateDarwin= "darwin-rebuild switch --flake ${ConfigFile}";
       updateHomeMac = "home-manager switch --flake ${ConfigFile}/#mac -v";
       updateHomeNixos = "home-manager switch --flake ${ConfigFile}/#nixos -v";
+      bubu = "brew update && brew outdated && brew upgrade && brew cleanup";
 
       t = "tmux attach -t default || tmux new -s default";
     };

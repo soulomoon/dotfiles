@@ -66,6 +66,27 @@
       credential.helper = "store --file ~/.git-credentials";
     };
   };
+  programs.eza = {
+    enable = true;
+    enableFishIntegration = true;
+  };
+
+  # programs.vscode = {
+  #   enable = true;
+  #   extensions = with pkgs.vscode-extensions; [
+  #     # ms-python.python
+  #     # ms-vscode.cpptools
+  #     # esbenp.prettier-vscode
+  #     # dbaeumer.vscode-eslint
+  #     # Add more extensions as needed
+  #   ];
+  #   settings = {
+  #     # "editor.fontSize" = 14;
+  #     "editor.tabSize" = 2;
+  #     "files.autoSave" = "onFocusChange";
+  #     # Add more settings as needed
+  #   };
+  # };
 
   # programs.go.enable = true;
 
