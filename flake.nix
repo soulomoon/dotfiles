@@ -2,24 +2,22 @@
   description = "soulomoon's systems";
 
   inputs = {
+    nixvim.url = "github:soulomoon/nixvim";
     nixpkgs.url = "github:nixos/nixpkgs/master";
     vscode-server.url = "github:nix-community/nixos-vscode-server";
-
     unstable.url = "github:nixos/nixpkgs-channels/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     darwin = {
       url = "github:lnl7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
   };
 
 
-  outputs = { self, nixpkgs, home-manager, darwin, unstable, vscode-server, ... }:
+  outputs = { self, nixpkgs, home-manager, darwin, unstable, vscode-server, nixvim, ... }:
     {
         programs.neovim = {
           enable = true;
@@ -69,6 +67,10 @@
                       home = {
                         username = "ares";
                         homeDirectory = "/Users/ares";
+                        packages = [
+                          nixvim.packages."aarch64-darwin".default
+                        ];
+
                       };
                     }
                 ];

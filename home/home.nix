@@ -12,7 +12,7 @@
   };
   imports = [
     ./vim
-    ./nvim
+  # ./nvim
     ./shell
     ./tmux
     ];
@@ -20,7 +20,7 @@
   home.packages = with pkgs; [
     bash
     neofetch
-    gh
+    # gh
     # neovide
     # macvim
     # pkgs is the set of all packages in the default home.nix implementation
