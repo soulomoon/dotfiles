@@ -78,13 +78,16 @@ vim.o.updatetime = 500
 local capabilities    = require('cmp_nvim_lsp').default_capabilities()
 
 local nvim_lsp    = require('lspconfig')
-local on_attach   = function(client, bufnr)
+local on_attach   = function(_client, bufnr)
+    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
     local function buf_set_keymap(...)
         vim.api.nvim_buf_set_keymap(bufnr, ...)
     end
     local function buf_set_option(...)
         vim.api.nvim_buf_set_option(bufnr, ...)
     end
+    -- Enable code lens
+
 
     -- Enable completion triggered by <c-x><c-o>
     buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')

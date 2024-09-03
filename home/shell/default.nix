@@ -48,6 +48,7 @@ in {
   };
   programs.fish = {
     enable = true;
+    # plugins = [ "z" ];
     interactiveShellInit = ''
         fish_vi_key_bindings
         fish_add_path /Users/ares/.nix-profile/bin/
@@ -56,6 +57,17 @@ in {
         fish_add_path ~/bin
       '';
     inherit shellAliases;
+    plugins = [
+          {
+            name = "z";
+            src = pkgs.fetchFromGitHub {
+              owner = "jethrokuan";
+              repo = "z";
+              rev = "ddeb28a7b6a1f0ec6dae40c636e5ca4908ad160a";
+              sha256 = "0c5i7sdrsp0q3vbziqzdyqn4fmp235ax4mn4zslrswvn8g3fvdyh";
+            };
+          }
+     ];
   };
 
 

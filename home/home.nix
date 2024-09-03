@@ -1,4 +1,4 @@
-{ config, pkgs, xdg, pkgs-unstable, ... }:
+{ config, inputs, pkgs, xdg, pkgs-unstable, ... }:
 {
 
   #  home.stateVersion = "23.05"; # Please read the comment before changing.
@@ -25,6 +25,7 @@
     # macvim
     # pkgs is the set of all packages in the default home.nix implementation
     llvm cmake flex bison
+    fasd
     # direnv
     # gcc
     # ghc
@@ -90,10 +91,10 @@
 
   # programs.go.enable = true;
 
-  programs.dircolors = {
-    enable = true;
-    extraConfig = builtins.readFile ./dir_colors;
-  };
+  # programs.dircolors = {
+  #   enable = true;
+  #   extraConfig = builtins.readFile ./dir_colors;
+  # };
   programs.fzf.enable = true;
 
 }

@@ -1,4 +1,4 @@
-{ config, pkgs, xdg, pkgs-unstable, ... }:
+{ config, inputs, pkgs, xdg, pkgs-unstable, ... }:
 let
   vimPlugins =
     with pkgs.vimPlugins; [
@@ -54,7 +54,9 @@ in
 {
   programs.neovim = {
     enable = true;
-    # package = pkgs-unstable.neovim;
+    package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
+
+    # package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
     plugins = vimPlugins ++ (with pkgs.vimPlugins; [
       dressing-nvim
       legendary-nvim
