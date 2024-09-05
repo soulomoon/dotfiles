@@ -2,12 +2,13 @@
   description = "soulomoon's systems";
 
   inputs = {
-    nixvim.url = "github:soulomoon/nixvim/536dd597855d54aec234bb7b4591c8d77c68268b";
+    nixvim = {
+      url = "github:soulomoon/nixvim-1/8606d16b17832055ee0ba76d7c1d0c8bc9b9b897";
+      # inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-24.05-darwin";
     vscode-server.url = "github:nix-community/nixos-vscode-server";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-
-    # unstable.url = "github:nixos/nixpkgs/b305dc2006b6882311e2996338e8df70d9cde690";
     unstable.url = "github:nixos/nixpkgs-channels/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/master";
