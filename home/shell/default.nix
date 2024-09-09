@@ -1,22 +1,24 @@
 { config, pkgs, xdg, ... }:
 
-let ConfigFile = "~/.config/nixpkgs";
-    shellAliases = {
-      mc = "code ${ConfigFile}";
-      ll = "ls -l";
-      # replace home
-      # updatehome = "nix run ${ConfigFile}";
-      uh = "nix run ${ConfigFile}";
-      # updateNixos = "sudo nixos-rebuild switch";
-      updateNixos= "sudo nixos-rebuild switch --flake ${ConfigFile}";
-      updateDarwin= "darwin-rebuild switch --flake ${ConfigFile}";
-      updateHomeMac = "home-manager switch --flake ${ConfigFile}/#mac -v";
-      updateHomeNixos = "home-manager switch --flake ${ConfigFile}/#nixos -v";
-      bubu = "brew update && brew outdated && brew upgrade && brew cleanup";
+let
+  ConfigFile = "~/.config/nixpkgs";
+  shellAliases = {
+    mc = "code ${ConfigFile}";
+    ll = "ls -l";
+    # replace home
+    # updatehome = "nix run ${ConfigFile}";
+    uh = "nix run ${ConfigFile}";
+    # updateNixos = "sudo nixos-rebuild switch";
+    updateNixos = "sudo nixos-rebuild switch --flake ${ConfigFile}";
+    updateDarwin = "darwin-rebuild switch --flake ${ConfigFile}";
+    updateHomeMac = "home-manager switch --flake ${ConfigFile}/#mac -v";
+    updateHomeNixos = "home-manager switch --flake ${ConfigFile}/#nixos -v";
+    bubu = "brew update && brew outdated && brew upgrade && brew cleanup";
 
-      t = "tmux attach -t default || tmux new -s default";
-    };
-in {
+    t = "tmux attach -t default || tmux new -s default";
+  };
+in
+{
 
   # programs.carapace = {
   #   enable = true;
@@ -50,24 +52,25 @@ in {
     enable = true;
     # plugins = [ "z" ];
     interactiveShellInit = ''
-        fish_vi_key_bindings
-        fish_add_path /Users/ares/.nix-profile/bin/
-        fish_add_path /opt/homebrew/bin/
-        fish_add_path ~/.ghcup/bin
-        fish_add_path ~/bin
-      '';
+      fish_vi_key_bindings
+      fish_add_path /Users/ares/.nix-profile/bin/
+      fish_add_path /opt/homebrew/bin/
+      fish_add_path ~/.ghcup/bin
+      fish_add_path ~/.cabal/bin
+      fish_add_path ~/bin
+    '';
     inherit shellAliases;
     plugins = [
-          {
-            name = "z";
-            src = pkgs.fetchFromGitHub {
-              owner = "jethrokuan";
-              repo = "z";
-              rev = "ddeb28a7b6a1f0ec6dae40c636e5ca4908ad160a";
-              sha256 = "0c5i7sdrsp0q3vbziqzdyqn4fmp235ax4mn4zslrswvn8g3fvdyh";
-            };
-          }
-     ];
+      {
+        name = "z";
+        src = pkgs.fetchFromGitHub {
+          owner = "jethrokuan";
+          repo = "z";
+          rev = "ddeb28a7b6a1f0ec6dae40c636e5ca4908ad160a";
+          sha256 = "0c5i7sdrsp0q3vbziqzdyqn4fmp235ax4mn4zslrswvn8g3fvdyh";
+        };
+      }
+    ];
   };
 
 
@@ -93,7 +96,7 @@ in {
     inherit shellAliases;
     oh-my-zsh = {
       enable = false;
-      plugins = [ "brew" "fasd"];
+      plugins = [ "brew" "fasd" ];
       extraConfig = ''
         export PATH=~/.emacs.d/bin:$PATH
         export PATH=~/bin:$PATH
