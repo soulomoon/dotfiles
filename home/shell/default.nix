@@ -46,18 +46,21 @@ in
   programs.starship = {
     enable = true;
     enableNushellIntegration = true;
-
   };
   programs.fish = {
     enable = true;
     # plugins = [ "z" ];
     interactiveShellInit = ''
       fish_vi_key_bindings
-      fish_add_path /Users/ares/.nix-profile/bin/
+      fish_add_path $HOME/.nix-profile/bin/
       fish_add_path /opt/homebrew/bin/
       fish_add_path ~/.ghcup/bin
       fish_add_path ~/.cabal/bin
       fish_add_path ~/bin
+      fish_add_path $HOME/.cargo/bin
+      if test -e '/Users/maximiliantagher/.nix-profile/etc/profile.d/nix.sh'
+        fenv source '/Users/maximiliantagher/.nix-profile/etc/profile.d/nix.sh'
+      end
     '';
     inherit shellAliases;
     plugins = [
@@ -68,6 +71,15 @@ in
           repo = "z";
           rev = "ddeb28a7b6a1f0ec6dae40c636e5ca4908ad160a";
           sha256 = "0c5i7sdrsp0q3vbziqzdyqn4fmp235ax4mn4zslrswvn8g3fvdyh";
+        };
+      }
+      {
+        name = "nix-env";
+        src = pkgs.fetchFromGitHub {
+          owner = "lilyball";
+          repo = "nix-env.fish";
+          rev = "7b65bd228429e852c8fdfa07601159130a818cfa";
+          hash = "sha256-RG/0rfhgq6aEKNZ0XwIqOaZ6K5S4+/Y5EEMnIdtfPhk";
         };
       }
     ];
