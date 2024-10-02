@@ -1,4 +1,4 @@
-{ config, pkgs, xdg, fetchFromGitHub, lib, ... }:
+{ config, pkgs, xdg, fetchFromGitHub, lib, system, ... }:
 let
   m-prefix-highlight = pkgs.tmuxPlugins.mkTmuxPlugin {
     pluginName = "prefix-highlight";
@@ -81,6 +81,14 @@ in
       vim-tmux-navigator
     ];
     extraConfig =
+      if system == "aarch64-darwin" then
+      ''
+      unbind C-b
+      set -g prefix C-a
+      bind a send-prefix
+      ''
+      else ""
+      .
       builtins.readFile ./.tmux.conf;
   };
 }

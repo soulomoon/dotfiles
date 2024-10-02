@@ -71,7 +71,7 @@
                       inherit pkgs;
                       extraSpecialArgs = { inherit inputs ;};
                       modules = [
-                          ./home/home.nix
+                          ./home/home.nix {_module.args = { inherit system; };}
                           { nixpkgs.overlays = overlays; }
                           {
                             home = {
@@ -79,7 +79,6 @@
                               # set home directory based on system mac or linux
                               homeDirectory = if system == "aarch64-darwin" then "/Users/ares" else "/home/ares";
                               packages = [
-                                # nixvim.packages."aarch64-darwin".default
                                 nixvim.packages.${system}.default
                               ];
                             };
