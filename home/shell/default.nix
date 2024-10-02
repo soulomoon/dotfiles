@@ -1,7 +1,7 @@
 { config, pkgs, xdg, ... }:
 
 let
-  ConfigFile = "~/.config/nixpkgs";
+  ConfigFile = "~/.config/dotfiles";
   shellAliases = {
     mc = "code ${ConfigFile}";
     ll = "ls -l";
