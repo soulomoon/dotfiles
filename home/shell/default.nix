@@ -11,10 +11,8 @@ let
     # updateNixos = "sudo nixos-rebuild switch";
     updateNixos = "sudo nixos-rebuild switch --flake ${ConfigFile}";
     updateDarwin = "darwin-rebuild switch --flake ${ConfigFile}";
-    updateHomeMac = "home-manager switch --flake ${ConfigFile}/#mac -v";
-    updateHomeNixos = "home-manager switch --flake ${ConfigFile}/#nixos -v";
+    updateHome = "home-manager switch --flake ${ConfigFile} -v";
     bubu = "brew update && brew outdated && brew upgrade && brew cleanup";
-
     t = "tmux attach -t default || tmux new -s default";
   };
 in

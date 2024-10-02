@@ -16,7 +16,7 @@ telescope.setup {
     live_grep_args = {
       auto_quoting = true, -- enable/disable auto-quoting
       -- define mappings, e.g.
-      mappings = { -- extend mappings
+      mappings = {         -- extend mappings
         i = {
           ["<C-k>"] = lga_actions.quote_prompt(),
           ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
@@ -49,17 +49,17 @@ require("nvim-tree").setup({
 })
 
 require("nvim-treesitter.configs").setup {
-    auto_install = false,
-    highlight = {
-        enable = true
-    },
-    indent = {
-        enable = true
-    },
-    incremental_selection = {
-        enable = true
-    },
-    ensure_installed = {}
+  auto_install = false,
+  highlight = {
+    enable = true
+  },
+  indent = {
+    enable = true
+  },
+  incremental_selection = {
+    enable = true
+  },
+  ensure_installed = {}
 }
 require("trouble").setup {}
 vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle() end)
@@ -71,67 +71,67 @@ vim.keymap.set("n", "gR", function() require("trouble").toggle("lsp_references")
 
 
 
-vim.o.pumblend = 30
-vim.o.winblend = 30
-vim.o.updatetime = 500
+vim.o.pumblend     = 30
+vim.o.winblend     = 30
+vim.o.updatetime   = 500
 -- Add additional capabilities supported by nvim-cmp
-local capabilities    = require('cmp_nvim_lsp').default_capabilities()
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-local nvim_lsp    = require('lspconfig')
-local on_attach   = function(_client, bufnr)
-    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-    local function buf_set_keymap(...)
-        vim.api.nvim_buf_set_keymap(bufnr, ...)
+local nvim_lsp     = require('lspconfig')
+local on_attach    = function(_client, bufnr)
+  vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+  local function buf_set_keymap(...)
+    vim.api.nvim_buf_set_keymap(bufnr, ...)
+  end
+  local function buf_set_option(...)
+    vim.api.nvim_buf_set_option(bufnr, ...)
+  end
+  -- Enable code lens
+
+
+  -- Enable completion triggered by <c-x><c-o>
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  local opts = {
+    noremap = true,
+    silent  = true
+  }
+
+  vim.api.nvim_create_autocmd("CursorHold", {
+    buffer = bufnr,
+    callback = function()
+      local opts = {
+        focusable = false,
+        close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+        border = 'none',
+        source = 'always',
+        prefix = ' ',
+        scope = 'cursor',
+      }
+      vim.diagnostic.open_float(nil, opts)
     end
-    local function buf_set_option(...)
-        vim.api.nvim_buf_set_option(bufnr, ...)
-    end
-    -- Enable code lens
+  })
 
-
-    -- Enable completion triggered by <c-x><c-o>
-    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-    -- Mappings.
-    local opts = {
-        noremap   = true,
-        silent    = true
-    }
-
-    vim.api.nvim_create_autocmd("CursorHold", {
-        buffer = bufnr,
-        callback = function()
-          local opts = {
-            focusable = false,
-            close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-            border = 'none',
-            source = 'always',
-            prefix = ' ',
-            scope = 'cursor',
-          }
-          vim.diagnostic.open_float(nil, opts)
-        end
-      })
-
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    buf_set_keymap('n', '<space>li', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    buf_set_keymap('n', '<space>lk', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    buf_set_keymap('n', '<space>la', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-    buf_set_keymap('n', '<space>lr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-    buf_set_keymap('n', '<space>ll', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-    buf_set_keymap('n', '<space>ld', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    buf_set_keymap('n', '<space>ln', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    buf_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-    buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-    buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-    buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-    buf_set_keymap('n', '<space>lf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-    buf_set_keymap('v', 'f', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
-    buf_set_keymap('n', '<space>.', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-    buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', '<space>li', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<space>lk', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<space>la', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>lr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>ll', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  buf_set_keymap('n', '<space>ld', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<space>ln', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+  buf_set_keymap('n', '<space>lf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  buf_set_keymap('v', 'f', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
+  buf_set_keymap('n', '<space>.', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
 end
 -- haskell = {
 --     cabalFormattingProvider = "cabalfmt",
@@ -139,50 +139,50 @@ end
 --   }
 
 
-local servers = { }
+local servers = {}
 for _, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup {
-        on_attach = on_attach,
-        capabilities = capabilities,
-        flags = {
-            debounce_text_changes = 150
-        }
+  nvim_lsp[lsp].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    flags = {
+      debounce_text_changes = 150
     }
+  }
 end
 
 vim.lsp.set_log_level("debug")
 
-nvim_lsp.hls.setup{
-        filetypes = { 'haskell', 'lhaskell', 'cabal' },
-        cmd = {"/Users/ares/.ghcup/bin/haskell-language-server-wrapper", "--lsp"},
-        settings = {
-          haskell = {
-              plugin = {
-                semanticTokens = {
-                  config = {
-                      classMethodToken= "method",
-                      classToken = "class",
-                      dataConstructorToken=  "enumMember",
-                      functionToken= "function",
-                      moduleToken= "namespace",
-                      patternSynonymToken= "macro",
-                      recordFieldToken= "property",
-                      typeConstructorToken= "enum",
-                      typeFamilyToken= "interface",
-                      typeSynonymToken= "type",
-                      typeVariableToken= "typeParameter",
-                      variableToken= "variable"
-                  },
-                  globalOn = true
-              }
-            }
-          }
-        },
-        on_attach = on_attach,
-        capabilities = capabilities,
-        flags = {
-            debounce_text_changes = 150
+nvim_lsp.hls.setup {
+  filetypes = { 'haskell', 'lhaskell', 'cabal' },
+  cmd = { "${HOME}/.ghcup/bin/haskell-language-server-wrapper", "--lsp" },
+  settings = {
+    haskell = {
+      plugin = {
+        semanticTokens = {
+          config = {
+            classMethodToken = "method",
+            classToken = "class",
+            dataConstructorToken = "enumMember",
+            functionToken = "function",
+            moduleToken = "namespace",
+            patternSynonymToken = "macro",
+            recordFieldToken = "property",
+            typeConstructorToken = "enum",
+            typeFamilyToken = "interface",
+            typeSynonymToken = "type",
+            typeVariableToken = "typeParameter",
+            variableToken = "variable"
+          },
+          globalOn = true
         }
+      }
+    }
+  },
+  on_attach = on_attach,
+  capabilities = capabilities,
+  flags = {
+    debounce_text_changes = 150
+  }
 }
 
 
@@ -199,40 +199,40 @@ vim.o.completeopt = 'menuone,noselect'
 local luasnip = require 'luasnip'
 local cmp = require 'cmp'
 cmp.setup {
-    snippet = {
-        expand = function(args)
-            require('luasnip').lsp_expand(args.body)
-        end
+  snippet = {
+    expand = function(args)
+      require('luasnip').lsp_expand(args.body)
+    end
+  },
+  mapping = {
+    ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true
     },
-    mapping = {
-        ['<CR>'] = cmp.mapping.confirm {
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = true
-        },
-        ['<Tab>'] = function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
-            else
-                fallback()
-            end
-        end,
-        ['<S-Tab>'] = function(fallback)
-            if cmp.visible() then
-                cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-                luasnip.jump(-1)
-            else
-                fallback()
-            end
-        end
-    },
-    sources = {{
-        name = 'nvim_lsp'
-    }, {
-        name = 'luasnip'
-    }}
+    ['<Tab>'] = function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end,
+    ['<S-Tab>'] = function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end
+  },
+  sources = { {
+    name = 'nvim_lsp'
+  }, {
+    name = 'luasnip'
+  } }
 }
 
 -- require("indent_blankline").setup {
@@ -241,86 +241,86 @@ cmp.setup {
 --     show_current_context_start = true,
 -- }
 
-require'nvim-web-devicons'.setup {
-    -- your personnal icons can go here (to override)
-    -- you can specify color or cterm_color instead of specifying both of them
-    -- DevIcon will be appended to `name`
-    override = {
-     zsh = {
-       icon = "",
-       color = "#428850",
-       cterm_color = "65",
-       name = "Zsh"
-     }
-    };
-    -- globally enable different highlight colors per icon (default to true)
-    -- if set to false all icons will have the default icon's color
-    color_icons = true;
-    -- globally enable default icons (default to false)
-    -- will get overriden by `get_icons` option
-    default = true;
-    -- globally enable "strict" selection of icons - icon will be looked up in
-    -- different tables, first by filename, and if not found by extension; this
-    -- prevents cases when file doesn't have any extension but still gets some icon
-    -- because its name happened to match some extension (default to false)
-    strict = true;
-    -- same as `override` but specifically for overrides by filename
-    -- takes effect when `strict` is true
-    override_by_filename = {
-     [".gitignore"] = {
-       icon = "",
-       color = "#f1502f",
-       name = "Gitignore"
-     }
-    };
-    -- same as `override` but specifically for overrides by extension
-    -- takes effect when `strict` is true
-    override_by_extension = {
-     ["log"] = {
-       icon = "",
-       color = "#81e043",
-       name = "Log"
-     }
-    };
-   }
+require 'nvim-web-devicons'.setup {
+  -- your personnal icons can go here (to override)
+  -- you can specify color or cterm_color instead of specifying both of them
+  -- DevIcon will be appended to `name`
+  override = {
+    zsh = {
+      icon = "",
+      color = "#428850",
+      cterm_color = "65",
+      name = "Zsh"
+    }
+  },
+  -- globally enable different highlight colors per icon (default to true)
+  -- if set to false all icons will have the default icon's color
+  color_icons = true,
+  -- globally enable default icons (default to false)
+  -- will get overriden by `get_icons` option
+  default = true,
+  -- globally enable "strict" selection of icons - icon will be looked up in
+  -- different tables, first by filename, and if not found by extension; this
+  -- prevents cases when file doesn't have any extension but still gets some icon
+  -- because its name happened to match some extension (default to false)
+  strict = true,
+  -- same as `override` but specifically for overrides by filename
+  -- takes effect when `strict` is true
+  override_by_filename = {
+    [".gitignore"] = {
+      icon = "",
+      color = "#f1502f",
+      name = "Gitignore"
+    }
+  },
+  -- same as `override` but specifically for overrides by extension
+  -- takes effect when `strict` is true
+  override_by_extension = {
+    ["log"] = {
+      icon = "",
+      color = "#81e043",
+      name = "Log"
+    }
+  },
+}
 
 require('bufferline').setup {}
 
 -- require('feline').setup()
-require'lualine'.setup {
-    extensions = {
-        'quickfix',
-        'symbols-outline',
-    },
-    theme = 'onedark'
+require 'lualine'.setup {
+  extensions = {
+    'quickfix',
+    'symbols-outline',
+  },
+  theme = 'onedark'
 }
 require("symbols-outline").setup()
 
 
 require("cheatsheet").setup({
-    -- Whether to show bundled cheatsheets
+  -- Whether to show bundled cheatsheets
 
-    -- For generic cheatsheets like default, unicode, nerd-fonts, etc
-    bundled_cheatsheets = true,
-    -- bundled_cheatsheets = {
-    --     enabled = {},
-    --     disabled = {},
-    -- },
+  -- For generic cheatsheets like default, unicode, nerd-fonts, etc
+  bundled_cheatsheets = true,
+  -- bundled_cheatsheets = {
+  --     enabled = {},
+  --     disabled = {},
+  -- },
 
-    -- For plugin specific cheatsheets
-    bundled_plugin_cheatsheets = true,
-    -- bundled_plugin_cheatsheets = {
-    --     enabled = {},
-    --     disabled = {},
-    -- }
+  -- For plugin specific cheatsheets
+  bundled_plugin_cheatsheets = true,
+  -- bundled_plugin_cheatsheets = {
+  --     enabled = {},
+  --     disabled = {},
+  -- }
 
-    -- For bundled plugin cheatsheets, do not show a sheet if you
-    -- don't have the plugin installed (searches runtimepath for
-    -- same directory name)
-    include_only_installed_plugins = true,
-    telescope_mappings = {
-        ['C-f'] = require('telescope').extensions.live_grep_args.live_grep_args
-    }
+  -- For bundled plugin cheatsheets, do not show a sheet if you
+  -- don't have the plugin installed (searches runtimepath for
+  -- same directory name)
+  include_only_installed_plugins = true,
+  telescope_mappings = {
+    ['C-f'] = require('telescope').extensions.live_grep_args.live_grep_args
+  }
 })
 
 
@@ -329,22 +329,22 @@ require("cheatsheet").setup({
 
 
 
-require("toggleterm").setup{
-    -- open_mapping = [[<ESC>]],
+require("toggleterm").setup {
+  -- open_mapping = [[<ESC>]],
 }
 
 local wk = require("which-key")
 wk.register({
-    ["<leader>"] = {
-        f = {
-          name = "telescope",
-        --   f = { "<cmd>Telescope find_files<cr>", "Find File" },
-        --   r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
-        --   n = { "<cmd>enew<cr>", "New File" },
-          g = { require('telescope').extensions.live_grep_args.live_grep_args, "telescope livegrep args" } -- you can also pass functions!
-        },
-      },
-  }, {})
+  ["<leader>"] = {
+    f = {
+      name = "telescope",
+      --   f = { "<cmd>Telescope find_files<cr>", "Find File" },
+      --   r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
+      --   n = { "<cmd>enew<cr>", "New File" },
+      g = { require('telescope').extensions.live_grep_args.live_grep_args, "telescope livegrep args" } -- you can also pass functions!
+    },
+  },
+}, {})
 wk.setup {}
 
 require('hlargs').setup()
@@ -411,19 +411,19 @@ require('legendary').setup({
   -- triggered via `legendary.nvim`. Example config for `dressing.nvim`:
   --
   require('dressing').setup({
-   select = {
-     get_config = function(opts)
-       if opts.kind == 'legendary.nvim' then
-         return {
-           telescope = {
-             sorter = require('telescope.sorters').fuzzy_with_index_bias({})
-           }
-         }
-       else
-         return {}
-       end
-     end
-   }
+    select = {
+      get_config = function(opts)
+        if opts.kind == 'legendary.nvim' then
+          return {
+            telescope = {
+              sorter = require('telescope.sorters').fuzzy_with_index_bias({})
+            }
+          }
+        else
+          return {}
+        end
+      end
+    }
   }),
 
   sort = {
