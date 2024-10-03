@@ -30,62 +30,60 @@
       ];
     in
     {
-        nixosConfigurations.nixosDesk = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules =
+      nixosConfigurations.nixosDesk = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules =
           [
             ./nixosDesk/configuration.nix
           ];
-        };
-        nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules =
+      };
+      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules =
           [
             ./nixos/configuration.nix
             vscode-server.nixosModules.default
-              ({ config, pkgs, ... }: {
-                services.vscode-server.enable = true;
-              })
+            ({ config, pkgs, ... }: {
+              services.vscode-server.enable = true;
+            })
           ];
-        };
+      };
 
-        darwinConfigurations.aress-mbp = darwin.lib.darwinSystem {
-          system = "aarch64-darwin";
-          modules =
+      darwinConfigurations.aress-mbp = darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        modules =
           [
             ./darwin/configuration.nix
           ];
-        };
+      };
 
-        nixpkgs.config = {
-          allowUnfree = true;
-        };
-
-        legacyPackages = (nixpkgs.lib.genAttrs flake-utils.lib.defaultSystems (system:
-              let
-                pkgs-unstable = import unstable {  inherit system; };
-                pkgs = import nixpkgs { inherit system ; };
-              in
-              {
-                homeConfigurations."ares" = (home-manager.lib.homeManagerConfiguration {
-                      inherit pkgs;
-                      extraSpecialArgs = { inherit inputs ;};
-                      modules = [
-                          ./home/home.nix {_module.args = { inherit system; };}
-                          { nixpkgs.overlays = overlays; }
-                          {
-                            home = {
-                              username = "ares";
-                              # set home directory based on system mac or linux
-                              homeDirectory = if system == "aarch64-darwin" then "/Users/ares" else "/home/ares";
-                              packages = [
-                                nixvim.packages.${system}.default
-                              ];
-                            };
-                          }
-                      ];
-                    });
-              }));
-      }
-    ;
+      nixpkgs.config = {
+        allowUnfree = true;
+      };
+    } //
+    (flake-utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = import nixpkgs { inherit system; };
+      in
+      {
+        packages.homeConfigurations."ares" = (home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = { inherit inputs; };
+          modules = [
+            ./home/home.nix
+            { _module.args = { inherit system; }; }
+            { nixpkgs.overlays = overlays; }
+            {
+              home = {
+                username = "ares";
+                # set home directory based on system mac or linux
+                homeDirectory = if system == "aarch64-darwin" then "/Users/ares" else "/home/ares";
+                packages = [
+                  nixvim.packages.${system}.default
+                ];
+              };
+            }
+          ];
+        });
+      }));
 }
