@@ -3,7 +3,7 @@
 
   inputs = {
     nixvim = {
-      url = "github:soulomoon/nixvim-1/5a9a7f36e03e39206695dc4eb3ef705f9983af41";
+      url = "github:soulomoon/nixvim-1/167debf8298849bb6197da989e2961d3e8dea676";
       # inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-24.05-darwin";
