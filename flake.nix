@@ -61,13 +61,10 @@
         allowUnfree = true;
       };
     } //
-    (flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs { inherit system; };
-      in
+    flake-utils.lib.eachDefaultSystem (system:
       {
-        packages.homeConfigurations."ares" = (home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
+        packages.homeConfigurations."ares" = home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs { inherit system; };
           extraSpecialArgs = { inherit inputs; };
           modules = [
             ./home/home.nix
@@ -84,6 +81,6 @@
               };
             }
           ];
-        });
-      }));
+        };
+      });
 }
