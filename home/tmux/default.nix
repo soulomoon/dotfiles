@@ -84,7 +84,6 @@ in
       if system == "aarch64-darwin" then
       ''
       unbind C-b
-      unbind C-\
       set -g prefix C-a
       bind a send-prefix
       ''
