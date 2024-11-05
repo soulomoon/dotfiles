@@ -81,14 +81,22 @@ in
       vim-tmux-navigator
     ];
     extraConfig =
-      if system == "aarch64-darwin" then
       ''
       unbind C-b
       set -g prefix C-a
       bind a send-prefix
-      ''
-      else ""
-      .
-      builtins.readFile ./.tmux.conf;
+      set-option -g default-shell $SHELL
+      set -g mode-keys vi
+      bind-key -T copy-mode-vi 'v' send -X begin-selection
+      bind-key -T copy-mode-vi 'y' send -X copy-selection-and-cancel
+      bind-key M-q select-layout even-horizontal
+      set-option -g @pane_resize "10"
+      set -g mouse on
+      set -g default-terminal "xterm-256color"
+      set-option -ga terminal-overrides ",xterm-256color:Tc"
+      set -as terminal-overrides ',*:Smul=\E[4m'  # undercurl support
+      set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'  # undercurl support
+      set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'  # underscore colours - needs tmux-3.0
+      '';
   };
 }

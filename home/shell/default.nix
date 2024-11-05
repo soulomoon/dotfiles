@@ -49,6 +49,7 @@ in
     enable = true;
     # plugins = [ "z" ];
     interactiveShellInit = ''
+      # set -gx TERM xterm-256color
       fish_vi_key_bindings
       fish_add_path $HOME/.nix-profile/bin/
       fish_add_path /opt/homebrew/bin/
@@ -87,7 +88,7 @@ in
   programs.zsh = {
     enable = true;
     initExtra = ''
-      export TERM="xterm-256color"
+      # export TERM="xterm-256color"
       export PATH=~/.ghcup/bin:$PATH
       export PATH=~/bin:$PATH
       export PATH="/opt/homebrew/opt/m4/bin:$PATH"
