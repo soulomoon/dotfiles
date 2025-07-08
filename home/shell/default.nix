@@ -44,6 +44,9 @@ in
   programs.starship = {
     enable = true;
     enableNushellIntegration = true;
+    settings = {
+      command_timeout = 500;
+    };
   };
   programs.fish = {
     enable = true;
@@ -54,7 +57,7 @@ in
       fish_add_path $HOME/.nix-profile/bin/
       fish_add_path /opt/homebrew/bin/
       fish_add_path ~/.ghcup/bin
-      fish_add_path ~/.cabal/bin
+      fish_add_path ~/.local/bin
       fish_add_path ~/bin
       fish_add_path $HOME/.cargo/bin
       if test -e '/Users/maximiliantagher/.nix-profile/etc/profile.d/nix.sh'

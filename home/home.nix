@@ -18,14 +18,14 @@
     ];
   home.username = "ares";
   home.packages = with pkgs; [
-    bash
-    neofetch
+    # bash
+    # neofetch
     # gh
     # neovide
     # macvim
     # pkgs is the set of all packages in the default home.nix implementation
-    llvm cmake flex bison
-    fasd
+    # llvm cmake flex bison
+    # fasd
     # direnv
     # gcc
     # ghc
@@ -39,17 +39,17 @@
     # jdk
     # clojure
     # database
-    sqlite
-    cachix
+    # sqlite
+    # cachix
     # helix
     # act
     # tools
-    diffutils shellcheck pandoc fasd ripgrep thefuck gtop nixpkgs-fmt
-    coreutils
-    inetutils
-    qemu
-    docker
-    redis
+    # diffutils shellcheck pandoc fasd ripgrep thefuck gtop nixpkgs-fmt
+    # coreutils
+    # inetutils
+    # qemu
+    # docker
+    # redis
     # irssi
 
     # btop
@@ -66,12 +66,19 @@
     extraConfig = {
       credential.helper = "store --file ~/.git-credentials";
     };
+    lfs.enable = true;
   };
   programs.eza = {
     enable = true;
     enableFishIntegration = true;
   };
 
+  programs.pyenv = {
+    enable = true;
+    enableFishIntegration = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
+  };
   # programs.vscode = {
   #   enable = true;
   #   extensions = with pkgs.vscode-extensions; [
