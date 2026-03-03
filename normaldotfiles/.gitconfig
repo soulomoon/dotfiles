@@ -1,0 +1,6 @@
+[user]
+    name = soulomoon
+    email = fwy996602672@gmail.com
+
+[credential]
+    helper = store --file ~/.git-credentials
